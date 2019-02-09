@@ -134,12 +134,12 @@ class Character(pygame.sprite.Sprite):
         self.image = self.images[self.expression]
         
         
-background_dic = {"city": Background(map.BACKGROUND_CITY),
+background_dict = {"city": Background(map.BACKGROUND_CITY),
                    "house": Background(map.BACKGROUND_HOUSE),
                    "forge": Background(map.BACKGROUND_FORGE),
                    "school": Background(map.BACKGROUND_SCHOOL)}
 
-character_dic = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
+character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
                   "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
                   "elves": Character(map.ELF_PATH, 2),
@@ -150,8 +150,14 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "heduintro": parse_(map.HUMAN_ED_INTRO),
                "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
                "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
+               "hsit2human": parse_(map.HUMAN_SIT2_HUMAN),
                "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
-               "htradeintro": parse_(map.HUMAN_TR_INTRO)}
+               "htradeintro": parse_(map.HUMAN_TR_INTRO),
+               "hteam1dwarf": parse_(map.HUMAN_TEAM1_DWARF),
+               "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
+               "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
+               "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN)
+               }
 
 textbox = TextBox()
 
@@ -164,7 +170,7 @@ class Scene(object):
         if text is not None:
             self.text = script_dict[text]
         else:
-            self.text = script_dict["open"]
+            self.text = script_dict["hteam2human"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]

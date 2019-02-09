@@ -52,7 +52,7 @@ def parse_(filename):
     lines = []
     script = open(filename,"r", encoding="utf-8")
     for l in script:
-        lines.append(DynamicText(font,l.rstrip(),(25,250), autoreset=False))
+        lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     return lines
 
 messagenumber = 0
