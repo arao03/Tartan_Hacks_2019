@@ -31,7 +31,7 @@ class DynamicText(object):
         self.text = text
         self._gen = text_generator(self.text)
         self.pos = pos
-        self.rendered = None
+        self.rendered = self.font.render("", True, (255, 255, 255))
         self.autoreset = autoreset
         self.update()
 
@@ -67,11 +67,11 @@ def parse_(filename):
     script.truncate()
     script.write(newcontents)
     script.close()
-    script = open(filename, "r")
+    script = open(filename, "r", encoding='utf-8')
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     script.close()
-    script = open(filename, "w")
+    script = open(filename, "w", encoding='utf-8')
     script.truncate()
     script.write(contents)
     return lines
