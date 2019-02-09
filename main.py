@@ -23,13 +23,9 @@ def main():
     initData(data)
     size = map.SCREEN_SIZE
     screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("TartanHacks 2019")
-    time = pygame.time.Clock()
-
-    pygame.mixer.music.load("music/menu.ogg")  # This is where to look for music playing
-    scene = Scene()
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
+    scene = Scene()
     pygame.mixer.music.load("./Assets/Music/menu.ogg")  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
