@@ -6,7 +6,7 @@ except NameError: pass
 class TextToSpeech(object):
     def __init__(self, subscription_key):
         self.subscription_key = subscription_key
-        self.tts = input("What would you like to convert to speech: ")
+        self.tts = input("Enter your name: ")
         self.timestr = time.strftime("%Y%m%d-%H%M")
         self.access_token = None
     def get_token(self):
@@ -17,7 +17,7 @@ class TextToSpeech(object):
         response = requests.post(fetch_token_url, headers=headers)
         self.access_token = str(response.text)
 
-    def save_audio(self):
+    def save_audio(self, file_name):
         base_url = 'https://eastus.tts.speech.microsoft.com/'
         path = 'cognitiveservices/v1'
         constructed_url = base_url + path
@@ -37,7 +37,7 @@ class TextToSpeech(object):
 
         response = requests.post(constructed_url, headers=headers, data=body)
         if response.status_code == 200:
-            with open('sample-' + self.timestr + '.wav', 'wb') as audio:
+            with open(file_name + '.wav', 'wb') as audio:
                 audio.write(response.content)
                 print("\nStatus code: " + str(response.status_code) + "\nYour TTS is ready for playback.\n")
         else:
@@ -48,4 +48,4 @@ if __name__ == "__main__":
     subscription_key = "ba1a0f518f644cafb99630f0b734b42b"
     app = TextToSpeech(subscription_key)
     app.get_token()
-    app.save_audio()
+    app.save_audio("name")
