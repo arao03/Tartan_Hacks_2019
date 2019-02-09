@@ -3,6 +3,7 @@ from pygame.locals import *
 from userinput import *
 import map
 from scrolling_text import *
+from operator import pos
 
 def posSwitch(argument):
     switcher = {
@@ -112,23 +113,25 @@ class TextBox(pygame.surface.Surface):
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, file_name, expression_count, position = 0, expression = 0, offsets = None):
+    def __init__(self, file_name, expression_count, position = 0, expression = 0):
         pygame.sprite.Sprite.__init__(self)
-        self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = -1)
-        self.expression = expression # Default
+        self.val_dict = {"file_name": file_name,
+                         "expression_count": expression_count,
+                         "position": position,
+                         "expression": expression}
         
-        self.rect = posSwitch(position)
-        self.image = self.images[self.expression]
+        self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = (255,255,255))
+            
+        self.rect = posSwitch(self.val_dict["position"])
+        self.image = self.images[self.val_dict["position"]]
         
-    def updateExp(self, expression):
-        self.expression = expression
-        
-    def updatePos(self, position):
-        self.position = position
+    def updateCharacter(self, key, arguement):
+        self.val_dict[key] = arguement
+        self.update()
         
     def update(self):
-        self.image = self.images[self.expression]
-        self.rect = posSwitch(self.position)
+        self.image = self.images[self.val_dict["expression"]]
+        self.rect = posSwitch(self.val_dict["position"])
         
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
@@ -139,10 +142,8 @@ background_dict = {"city": Background(map.BACKGROUND_CITY),
 character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
                   "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
-                  "elf-0": Character(map.ELF_PATH, 2, 0, 0),
-                  "elf-1": Character(map.ELF_PATH, 2, 0, 1),
-                  "human-0": Character(map.HUMAN_PATH, 2, 1, 0),
-                  "human-1": Character(map.HUMAN_PATH, 2, 1, 1)}
+                  "elf": Character(map.ELF_PATH, 2),
+                  "human": Character(map.HUMAN_PATH, 2)}
 
 script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hintro": parse_(map.HUMAN_INTRO),
@@ -171,19 +172,18 @@ class Scene(object):
         if text is not None:
             self.text = script_dict[text]
         else:
-            self.text = script_dict["elfintro"]
+            self.text = script_dict["open"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
         else:
             self.background = background_dict["city"]
         # Set the character for the scene.
-        self.characters = []
         if isinstance(character, list):
-            for (char, exp) in character:
+            for (char, exp, pos) in character:
                 chartmp = character_dict[char]
-                chartmp.updateExp(exp)
-                #self.characters[i].updatePos(i)
+                chartmp.updateCharacter("expression", exp)
+                chartmp.updateCharacter("position", pos)
                 self.sprites.add(chartmp)
         else:
             print "Please provide characters as a list [left, right, center]"
@@ -207,6 +207,8 @@ class Scene(object):
 
         pygame.display.update()
         
-scene_dict = {"open": Scene("city", [("elf-0", 0), ("human-0", 1)], "open", [button_dict[0], button_dict[1]]),
-              0: Scene("city", [("elf-0", 0)], "hintro", [button_dict[0]]),
-              1: Scene("city", [("human-0", 1)], "hintro", [button_dict[0]])}
+scene_dict = {"open": Scene(background="city", character=[("human", 0, 0), ("elf", 0, 1), ("elf", 1, 2)], text="open", buttons=[button_dict[0], button_dict[1], button_dict[2]]),
+              "0": Scene("city", [("human", 1, 0)], "hintro", [button_dict[3]]),
+              "1": Scene("city", [("elf", 1, 2)], "elfintro", [button_dict[3]]), # placeholder
+              "2": Scene("city", [("elf", 0, 1)], "hintro", [button_dict[3]]), # placeholder
+              "3": Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [button_dict[0]])}

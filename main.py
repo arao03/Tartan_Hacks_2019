@@ -10,7 +10,7 @@ from userinput import *
 
 
 def changeScene(buttonid):
-    return scene_dict[buttonid]
+    return scene_dict[str(buttonid)]
 
 def initData(data):
     data.gameOver = False
@@ -47,6 +47,9 @@ def main():
                     if button.buttonPressed(event):
                         scene = changeScene(button.id)
                         print "Scene Changed: " + str(button.id)
+                        data.buttons = set()
+                        for button in scene.buttons:
+                            data.buttons.add(button)
                         
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
