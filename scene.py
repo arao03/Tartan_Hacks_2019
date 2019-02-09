@@ -173,8 +173,6 @@ class Icon(pygame.sprite.Sprite):
     def __init__(self, file_name, position):
         self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
->>>>>>> fc600140030905bd3cf104d8792d1afebd5c2ff5
-
 
 textbox = TextBox()
 
@@ -221,7 +219,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[0]], True)
         else:
-            print "No left path"
+            print("No left path")
             return (self, False)
     
     def goRight(self):
@@ -229,7 +227,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[1]], True)
         else:
-            print "No right path"
+            print("No right path")
             return (self, False)
     
     def goCenter(self):
@@ -237,7 +235,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[2]], True)
         else:
-            print "Please choose left or right"
+            print("Please choose left or right")
             return (self, False)
         
     def goTransition(self):
