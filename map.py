@@ -39,3 +39,9 @@ BACKGROUND_SCHOOL = './Assets/Backgrounds/school_background.png'
 
 # SCRIPTS
 OPENING_SCRIPT = './Assets/Scripts/openscene.txt'
+HUMAN_INTRO = './Assets/Scripts/humanintro.txt'
+HUMAN_ED_INTRO = './Assets/Scripts/humanedintro.txt'
+HUMAN_SIT1_ELF = './Assets/Scripts/humansit1e.txt'
+HUMAN_SIT2_ELF = './Assets/Scripts/humansit2e.txt'
+HUMAN_SIT1_HUMAN = './Assets/Scripts/humansit1h.txt'
+HUMAN_TR_INTRO = './Assets/Scripts/humantrintro.txt'

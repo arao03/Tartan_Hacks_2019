@@ -29,6 +29,6 @@ class Button(object):
                 
                 
 button_dict = { 0: Button(0, map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
-                1: Button(1, map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS),
-                2: Button(2, map.SPRITE_LOCATION_RIGHT, map.SPRITE_OFFSETS)
+                1: Button(1, map.SPRITE_LOCATION_RIGHT, map.SPRITE_OFFSETS),
+                2: Button(2, map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS)
                 }

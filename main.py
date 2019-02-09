@@ -31,11 +31,12 @@ def main():
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
-    scene = Scene()
+    scene = scene_dict["open"]
     pygame.mixer.music.load(map.MUSIC_PATH)  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
-    data.buttons.add(Button(0, map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS))
+    for button in scene.buttons:
+        data.buttons.add(button)
 
     while not data.gameOver:
         for event in pygame.event.get():
@@ -44,14 +45,15 @@ def main():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for button in data.buttons:
                     if button.buttonPressed(event):
-                        #scene = changeScene(button.id)
-                        print(True)
+                        scene = changeScene(button.id)
+                        print "Scene Changed: " + str(button.id)
                         
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
         
         time.tick(60)
         data.gametime = (data.gametime + 1) % 127
+        pygame.display.update()
         pygame.display.flip()
     pygame.quit()
 

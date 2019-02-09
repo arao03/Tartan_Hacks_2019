@@ -112,22 +112,23 @@ class TextBox(pygame.surface.Surface):
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, file_name, expression_count, position = 0, offsets = None):
+    def __init__(self, file_name, expression_count, position = 0, expression = 0, offsets = None):
         pygame.sprite.Sprite.__init__(self)
         self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = -1)
-        self.expression = 0 # Default
+        self.expression = expression # Default
         
         self.rect = posSwitch(position)
         self.image = self.images[self.expression]
         
-    def chg_pos(self, position):
-        self.rect = posSwitch(position)
-
-    def chg_expression(self, expression):
+    def updateExp(self, expression):
         self.expression = expression
         
-    def update(self, expression):
+    def updatePos(self, position):
+        self.position = position
+        
+    def update(self):
         self.image = self.images[self.expression]
+        self.rect = posSwitch(self.position)
         
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
@@ -138,45 +139,57 @@ background_dict = {"city": Background(map.BACKGROUND_CITY),
 character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
                   "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
-                  "elves": Character(map.ELF_PATH, 2),
-                  "humans": Character(map.HUMAN_PATH, 2)}
+                  "elf-0": Character(map.ELF_PATH, 2, 0, 0),
+                  "elf-1": Character(map.ELF_PATH, 2, 0, 1),
+                  "human-0": Character(map.HUMAN_PATH, 2, 1, 0),
+                  "human-1": Character(map.HUMAN_PATH, 2, 1, 1)}
 
-script_dict = {"open": parse_(map.OPENING_SCRIPT)}
+script_dict = {"open": parse_(map.OPENING_SCRIPT),
+               "hintro": parse_(map.HUMAN_INTRO),
+               "heduintro": parse_(map.HUMAN_ED_INTRO),
+               "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
+               "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
+               "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
+               "htradeintro": parse_(map.HUMAN_TR_INTRO)}
 
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, background = None, character = None, text = None, expression = 0):        
+    def __init__(self, background = None, character = None, text = None, buttons= None):        
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
-        
         # Set the text for the scene.
         if text is not None:
             self.text = script_dict[text]
         else:
             self.text = script_dict["open"]
-        
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
         else:
             self.background = background_dict["city"]
-            
         # Set the character for the scene.
-        if character is not None:
-            for char in character:
-                cha = character_dict[char]
-                cha.chg_expression(expression)
-                self.sprites.add(cha)
+        self.characters = []
+        if isinstance(character, list):
+            for (char, exp) in character:
+                chartmp = character_dict[char]
+                chartmp.updateExp(exp)
+                #self.characters[i].updatePos(i)
+                self.sprites.add(chartmp)
         else:
-            self.character = None
+            print "Please provide characters as a list [left, right, center]"
+            raise SystemError
+        
+        # Set the buttons.
+        if isinstance(buttons, list):
+            self.buttons = buttons
+        elif isinstance(character, list):
+            print "Please provide buttons for your character."
+            raise SystemError
 
         
     def draw(self, screen, event, gametime):
-        if self.character is not None:
-            self.sprites.add(self.character)
-            
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
@@ -185,3 +198,7 @@ class Scene(object):
         self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
+        
+scene_dict = {"open": Scene("city", [("elf-0", 0), ("human-0", 1)], "open", [button_dict[0], button_dict[1]]),
+              0: Scene("city", [("elf-0", 0)], "hintro", [button_dict[0]]),
+              1: Scene("city", [("human-0", 1)], "hintro", [button_dict[0]])}
