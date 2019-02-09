@@ -45,6 +45,7 @@ def main():
         time.tick(60)
         pygame.display.flip()
     pygame.quit()
+    print("hell yeah hit that button")
 
 
 if __name__ == "__main__":
