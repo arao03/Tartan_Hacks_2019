@@ -2,7 +2,7 @@
 SPRITE_OFFSETS = (90, 240)
 SPRITE_LOCATION_LEFT = (40,60)
 SPRITE_LOCATION_RIGHT = (410,60)
-MOUSE_VIS = 0
+MOUSE_VIS = 1
 SCREEN_SIZE = (540, 300)
 
 # ANNABELLE VARS
@@ -14,7 +14,7 @@ KAYLIN_PATH = './Assets/Sprites/kaylinexpsheet.png'
 KAYLIN_EXPRESSIONS = 8
 
 # FORVIK VARS
-FORVIK_PATH = './Assets/Sprites/forvikexpsheet.png'
+FORVIK_PATH = './Assets/Sprites/fovikexpsheet.png'
 FORVIK_EXPRESSIONS = 6
 
 # EXTRAS

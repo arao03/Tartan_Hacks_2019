@@ -2,6 +2,9 @@ import os, sys, pygame
 from pygame.locals import *
 import map
 
+pygame.init()
+screen = pygame.display.set_mode(map.SCREEN_SIZE, RESIZABLE)
+pygame.mouse.set_visible(map.MOUSE_VIS)
 
 def getImg(path, library):
     # https://nerdparadise.com/programming/pygame/part2
@@ -122,9 +125,9 @@ class Character(pygame.sprite.Sprite):
         
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
-                   "house": Background(map.BACKGROUND.HOUSE),
+                   "house": Background(map.BACKGROUND_HOUSE),
                    "forge": Background(map.BACKGROUND_FORGE),
-                   "school": Background(map.BRACKGROUND_SCHOOL)}
+                   "school": Background(map.BACKGROUND_SCHOOL)}
 
 character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
@@ -153,7 +156,8 @@ class Scene(object):
             
     def draw(self, screen):
         all_sprites = pygame.sprite.Group()
-        all_sprites.add(annabelle)
+        if self.character is not None:
+            all_sprites.add(self.character)
         
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
