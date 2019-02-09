@@ -1,2 +1,2 @@
-You have chosen to sit down beside the human. She smiles at you a little wider this time and asks "What’s your name?". You tell her, "My name is __name__ ". "My name is Annabelle," she says. A few other students trickle in - there are six dwarves and four humans in total. After class, Annabelle waves goodbye and disappears. 
+You have chosen to sit down beside the human. She smiles at you a little wider this time and asks "What’s your name?". You tell her, "My name is __name__ ". "My name is Annabelle," she says. A few other students trickle in - there are six dwarves and four humans in total. After class, Annabelle waves goodbye and disappears. Press the spacebar to continue.
 
