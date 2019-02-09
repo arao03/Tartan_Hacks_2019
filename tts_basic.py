@@ -4,9 +4,9 @@ try: input = raw_input
 except NameError: pass
 
 class TextToSpeech(object):
-    def __init__(self, subscription_key):
+    def __init__(self, subscription_key, name):
         self.subscription_key = subscription_key
-        self.tts = input("Enter your name: ")
+        self.tts = name
         self.timestr = time.strftime("%Y%m%d-%H%M")
         self.access_token = None
     def get_token(self):
