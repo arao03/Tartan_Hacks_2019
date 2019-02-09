@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3c1fe990-b14e-44aa-a29e-6a41e0c16f2c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/checkpoint1_human.py" beforeDir="false" afterPath="$PROJECT_DIR$/checkpoint1_human.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checkpoint1_human.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,8 +26,8 @@
       <file leaf-file-name="tts_basic.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tts_basic.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
+            <state relative-caret-position="105">
+              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -34,14 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkpoint1_human.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/checkpoint1_human.py">
+      <file leaf-file-name="scrolling_text.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/scrolling_text.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="32" column="21" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
-              <folding>
-                <element signature="e#5#18#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="204">
+              <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -59,13 +57,14 @@
         <option value="$PROJECT_DIR$/tts_basic.py" />
         <option value="$PROJECT_DIR$/checkpoint1.py" />
         <option value="$PROJECT_DIR$/checkpoint1_human.py" />
+        <option value="$PROJECT_DIR$/scrolling_text.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="561" />
+    <option name="x" value="4" />
     <option name="y" value="23" />
-    <option name="width" value="879" />
+    <option name="width" value="1436" />
     <option name="height" value="810" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -86,12 +85,6 @@
               <item name="Tartan_Hacks_2019" type="b2602c69:ProjectViewProjectNode" />
               <item name="Tartan_Hacks_2019" type="462c0819:PsiDirectoryNode" />
               <item name="Assets" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Tartan_Hacks_2019" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Tartan_Hacks_2019" type="462c0819:PsiDirectoryNode" />
-              <item name="Assets" type="462c0819:PsiDirectoryNode" />
-              <item name="Sprites" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -116,7 +109,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.checkpoint1_human">
+  <component name="RunManager" selected="Python.scrolling">
     <configuration name="Speechtest" type="PythonConfigurationType" factoryName="Python">
       <module name="Tartan_Hacks_2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -153,6 +146,24 @@
       <option name="EMULATE_TERMINAL" value="false" />
       <option name="MODULE_MODE" value="false" />
     </configuration>
+    <configuration name="scrolling" type="PythonConfigurationType" factoryName="Python">
+      <module name="Tartan_Hacks_2019" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="$PROJECT_DIR$/venv/bin/python" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/scrolling_text.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
     <configuration name="tts" type="PythonConfigurationType" factoryName="Python">
       <module name="Tartan_Hacks_2019" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -174,6 +185,7 @@
     <list>
       <item itemvalue="Python.Speechtest" />
       <item itemvalue="Python.tts" />
+      <item itemvalue="Python.scrolling" />
       <item itemvalue="Python.checkpoint1_human" />
     </list>
   </component>
@@ -191,13 +203,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="561" y="23" width="879" height="810" extended-state="0" />
+    <frame x="4" y="23" width="1436" height="810" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.24573378" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.13509749" />
       <window_info anchor="bottom" id="TODO" order="10" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.5005688" side_tool="true" weight="0.32880434" />
-      <window_info active="true" anchor="bottom" id="Run" order="6" sideWeight="0.49943116" visible="true" weight="0.28804347" />
+      <window_info anchor="bottom" id="Run" order="6" sideWeight="0.49943116" visible="true" weight="0.28804347" />
       <window_info anchor="bottom" id="Version Control" order="3" />
       <window_info anchor="bottom" id="Python Console" order="0" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
@@ -215,6 +227,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/speech_basic.py">
@@ -239,16 +256,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/tts_basic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="16" column="35" selection-start-line="16" selection-start-column="35" selection-end-line="16" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/speech_basic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -258,11 +265,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/checkpoint1_human.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="32" column="21" selection-start-line="32" selection-start-column="21" selection-end-line="32" selection-end-column="21" />
+        <state relative-caret-position="534">
+          <caret line="36" column="27" lean-forward="true" selection-start-line="36" selection-start-column="27" selection-end-line="36" selection-end-column="27" />
           <folding>
             <element signature="e#5#18#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tts_basic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scrolling_text.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="32" column="34" lean-forward="true" selection-start-line="32" selection-start-column="34" selection-end-line="32" selection-end-column="34" />
         </state>
       </provider>
     </entry>
