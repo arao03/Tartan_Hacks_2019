@@ -17,7 +17,7 @@ class TextToSpeech(object):
         response = requests.post(fetch_token_url, headers=headers)
         self.access_token = str(response.text)
 
-    def save_audio(self, file_name):
+    def save_audio(self):
         base_url = 'https://eastus.tts.speech.microsoft.com/'
         path = 'cognitiveservices/v1'
         constructed_url = base_url + path
@@ -37,15 +37,9 @@ class TextToSpeech(object):
 
         response = requests.post(constructed_url, headers=headers, data=body)
         if response.status_code == 200:
-            with open(file_name + '.wav', 'wb') as audio:
+            with open('name.wav', 'wb') as audio:
                 audio.write(response.content)
                 print("\nStatus code: " + str(response.status_code) + "\nYour TTS is ready for playback.\n")
         else:
             print("\nStatus code: " + str(
                 response.status_code) + "\nSomething went wrong. Check your subscription key and headers.\n")
-
-if __name__ == "__main__":
-    subscription_key = "ba1a0f518f644cafb99630f0b734b42b"
-    app = TextToSpeech(subscription_key)
-    app.get_token()
-    app.save_audio("name")
