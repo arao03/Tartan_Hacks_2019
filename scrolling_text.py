@@ -71,9 +71,9 @@ def parse_(filename):
     script.close()
     script = open(filename+"tmp", "r", encoding="utf-8")
     for l in script:
-        lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
+        lines.append(DynamicText(font,l,(30,250), autoreset=False))
     script.close()
-    script = open(filename, "w", encoding="utf-8")
+    script = open(filename, "w", encoding='utf-8')
     script.truncate()
     script.write(contents)
     return lines
@@ -82,8 +82,11 @@ def parse_(filename):
 #messagenumber = 0
 def parse_script(lines,event,messagenumber,gametime):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    if lines[messagenumber].done and not (gametime % 220):
+    if lines[messagenumber].done and not (gametime % 130):
          messagenumber += 1
-    lines[messagenumber].draw(screen)
-    return messagenumber
+    if messagenumber >= len(lines):
+        return 0
+    else:
+        lines[messagenumber].draw(screen)
+        return messagenumber
 
