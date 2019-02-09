@@ -300,17 +300,10 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                }
         
 scene_dict = {"open": Scene(),
-<<<<<<< HEAD
-              "hintro": Scene("city", [("human-1r", 1, 0)], "hintro", None, ["heduintro", ""),
-              1: Scene("city", [("elf-1l", 1, 2)], "eintro", None, [3]), # placeholder
-              2: Scene("city", [("elf-1l", 0, 1)], "hintro", None, [3]), # placeholder
-              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", None, [0, 1]),
-              "e_intro": Scene("city", )
-              }
-=======
+              "e_intro": Scene("city", ),
               "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
               "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               "dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
               "heduintro": Scene("school", ["kaylin-l", "human-0l"], "heduintro", None, ["hsit1elf", "hsit1human"]),
-              "hsit1elf": Scene("school", [""])}
->>>>>>> 21b7f9db4a8ac8bd25febdab466b70af2908804b
+              "hsit1elf": Scene("school", [""])
+              }
