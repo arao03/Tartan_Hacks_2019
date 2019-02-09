@@ -3,18 +3,18 @@ TartanHacks 2019
 imcmahon, lkipp, ananyara, asteiner
 '''
 
-
 class Button(object):
-    def __init__(self, coordinates, size):
+    def __init__(self, id, coordinates, size):
         # both coordinates and size are tuples
         self.x = coordinates[0]
         self.y = coordinates[1]
         self.w = size[0]
         self.h = size[1]
+        self.id = id
 
     def buttonPressed(self, event):
         if (self.x < event.pos[0] < self.x + self.w) \
-                and (self.y < pygame.mouse.get_pos[1] < self.y + self.h):
+                and (self.y < event.pos[1] < self.y + self.h):
             return True
         return False
 
