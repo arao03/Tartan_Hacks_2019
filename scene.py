@@ -167,7 +167,9 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
                "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
                "esmile2elf": parse_(map.ELF_SMILE2_ELF),
-               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
+               "esmile1elf": parse_(map.ELF_SMILE1_ELF),
+               "dintro": parse_(map.DWARF_INTRO),
+               "dschoolyou": parse_(map.DWARF_SCHOOL_YOU)
                }
 
 textbox = TextBox()

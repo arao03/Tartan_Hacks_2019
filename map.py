@@ -63,3 +63,7 @@ ELF_SMILE1_DWARF = './Assets/Scripts/elfsmile1d.txt'
 ELF_SMILE2_DWARF = './Assets/Scripts/elfsmile2d.txt'
 ELF_SMILE2_ELF = './Assets/Scripts/elfsmile2e.txt'
 ELF_SMILE1_ELF = './Assets/Scripts/elfsmile1e.txt'
+
+# DWARF SCRIPTS
+DWARF_INTRO = './Assets/Scripts/dwarfintro.txt'
+DWARF_SCHOOL_YOU = './Assets/Scripts/dwarfschy.txt'
