@@ -3,7 +3,7 @@ pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 
-font = pygame.font.Font(None, 25)
+font = pygame.font.Font(None, 20)
 
 # raise the USEREVENT every 1000ms
 pygame.time.set_timer(pygame.USEREVENT, 100)
@@ -48,31 +48,23 @@ class DynamicText(object):
     def draw(self, screen):
         screen.blit(self.rendered, self.pos)
 
-lines = []
-def parse_script(filename):
+def parse_(filename):
+    lines = []
     script = open(filename,"r")
-    for l in script.readline():
-        lines.append(DynamicText(font,l,(300,100), autoreset=False))
+    for l in script:
+        print(l)
+        lines.append(DynamicText(font,l,(20,250), autoreset=False))
+    return lines
 
+messagenumber = 0
+def parse_script(lines,event,messagenumber):
+    #pauseflag = 0
+    if event.type == pygame.USEREVENT: lines[messagenumber].update()
+    if lines[messagenumber].done == True:
+            #if pauseflag == 0:
+         pygame.time.delay(500)
+                #pauseflag = 1
+         messagenumber += 1
+    lines[messagenumber].draw(screen)
+    return messagenumber
 
-message1 = DynamicText(font, "A long time ago...", (200, 200), autoreset=False)
-message2 = DynamicText(font, "there existed a...", (200, 200), autoreset=False)
-messagenumber = 1
-pauseflag = 0
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT: break
-        if messagenumber == 1:
-            if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    else:
-        screen.fill(pygame.color.Color('black'))
-        if lines[messagenumber].done == True:
-            if pauseflag == 0:
-                pygame.time.delay(500)
-                pauseflag = 1
-            messagenumber += 1
-        lines[messagenumber].draw(screen)
-        pygame.display.update()
-        clock.tick(120)
-        continue
-    break
