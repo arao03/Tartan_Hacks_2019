@@ -14,7 +14,7 @@ class Button(object):
 
     def buttonPressed(self, event):
         if (self.x < event.pos[0] < self.x + self.w) \
-                and (self.y < event.pos[1] < self.y + self.h):
+                and (self.y < pygame.mouse.get_pos[1] < self.y + self.h):
             return True
         else:
             return False

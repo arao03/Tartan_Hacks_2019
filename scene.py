@@ -1,5 +1,6 @@
 import os, sys, pygame
 from pygame.locals import *
+from userinput import *
 import map
 
 pygame.init()
@@ -135,7 +136,8 @@ character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRE
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, background = None, character = None, expression = 0):        
+    def __init__(self, id, background = None, character = None, L = None, R = None, expression = 0):        
+        self.id = id
         self.sprites = pygame.sprite.Group()
         
         # Set the background for the scene.
@@ -143,6 +145,9 @@ class Scene(object):
             self.background = background_dict[background]
         else:
             self.background = background_dict["city"]
+            self.C = Scene(2, background = "city", character = "annabelle")
+        self.L = L
+        self.R = R
             
         # Set the character for the scene.
         if character is not None:
@@ -161,7 +166,5 @@ class Scene(object):
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
-        
-
 
         pygame.display.update()

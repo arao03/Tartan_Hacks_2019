@@ -26,7 +26,7 @@ def main():
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
     scene = Scene()
-    pygame.mixer.music.load("./Assets/Music/menu.ogg")  # This is where to look for music playing
+    pygame.mixer.music.load(map.MUSIC_PATH)  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
 
@@ -40,6 +40,8 @@ def main():
         
         time.tick(60)
         pygame.display.flip()
+        
+    
     pygame.quit()
     print("hell yeah hit that button")
 
