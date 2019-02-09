@@ -5,6 +5,17 @@ import map
 from scrolling_text import *
 from operator import pos
 
+def initData(data):
+    data.gameOver = False
+    data.library = {}
+    data.buttons = set()
+    data.gametime = 0
+    
+class Data(object): pass
+    # Initialize an all-purpose data instance for the model
+data = Data()
+initData(data)
+
 def posSwitch(argument):
     switcher = {
             0: pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
@@ -21,14 +32,14 @@ def getImg(path, library):
     image = library.get(path)
     if image == None:
         filePath = path.replace("/", os.sep).replace("\\", os.sep)
-        image = pygame.image.load(filePath)
+        image = pygame.image.load(filePath).convert()
         library[path] = image
     return image
 
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = getImg(filename, data.library)
         except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
             raise (SystemExit, message)
@@ -103,36 +114,43 @@ class SpriteStripAnim(object):
 class Background(pygame.surface.Surface):
     def __init__(self, image_file):
         pygame.surface.Surface.__init__(self, map.SCREEN_SIZE)
-        self.image = pygame.image.load(image_file).convert()
+        self.image = getImg(image_file, data.library)
         self.rect = self.image.get_rect()
         
 class TextBox(pygame.surface.Surface):
     def __init__(self):
-        self.image = pygame.image.load(map.TEXTBOX_PATH).convert()
+        self.image = getImg(map.TEXTBOX_PATH, data.library)
         self.rect = pygame.Rect(map.TEXTBOX_RECT)
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, file_name, expression_count, position = 0, expression = 0):
         pygame.sprite.Sprite.__init__(self)
-        self.val_dict = {"file_name": file_name,
-                         "expression_count": expression_count,
-                         "position": position,
+        self.val_dict = {"position": position,
                          "expression": expression}
         
         self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = (255,255,255))
             
         self.rect = posSwitch(self.val_dict["position"])
-        self.image = self.images[self.val_dict["position"]]
+        self.image = self.images[self.val_dict["expression"]]
         
-    def updateCharacter(self, key, arguement):
-        self.val_dict[key] = arguement
+    def get_dict(self):
+        return self.val_dict
+    
+    def set_dict(self, key, argument):
+        self.val_dict[key] = argument
         self.update()
         
     def update(self):
-        self.image = self.images[self.val_dict["expression"]]
         self.rect = posSwitch(self.val_dict["position"])
+        self.image = self.images[self.val_dict["expression"]]
         
+    dict = property(get_dict, set_dict)
+
+class Icon(pygame.sprite.Sprite):
+    def __init__(self, file_name, position):
+        self.image = getImg(file_name, data.library)
+        self.rect = posSwitch(position)
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
                    "house": Background(map.BACKGROUND_HOUSE),
@@ -164,10 +182,15 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, background = None, character = None, text = None, buttons= None):        
+    def __init__(self, background = None, character = None, text = None, buttons= None, transitions = []):
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
+        
+        if transitions is not None:
+            self.transitions = transitions
+        else:
+            self.transitions = [0,1,2]
         # Set the text for the scene.
         if text is not None:
             self.text = script_dict[text]
@@ -179,23 +202,33 @@ class Scene(object):
         else:
             self.background = background_dict["city"]
         # Set the character for the scene.
-        if isinstance(character, list):
+        if character is not None:
             for (char, exp, pos) in character:
                 chartmp = character_dict[char]
-                chartmp.updateCharacter("expression", exp)
-                chartmp.updateCharacter("position", pos)
+#                 chartmp.updateCharacter("expression", exp)
+#                 chartmp.updateCharacter("position", pos)
+                chartmp.dict["expression"] = exp
+                chartmp.dict["position"] = pos
                 self.sprites.add(chartmp)
         else:
-            print "Please provide characters as a list [left, right, center]"
-            raise SystemError
-        
-        # Set the buttons.
-        if isinstance(buttons, list):
-            self.buttons = buttons
-        elif isinstance(character, list):
-            print "Please provide buttons for your character."
-            raise SystemError
-
+            for (char, exp, pos) in [("human", 1, 0), ("elf", 0, 1), ("elf", 1, 2)]: # Default chars
+                chartmp = character_dict[char]
+                chartmp.dict["expression"] = exp
+                chartmp.dict["position"] = pos
+                self.sprites.add(chartmp)
+    
+    def goLeft(self):
+        return scene_dict[self.transitions[0]]
+    
+    def goRight(self):
+        return scene_dict[self.transitions[1]]
+    
+    def goCenter(self):
+        if len(transitions > 2):
+            return scene_dict[self.transitions[2]]
+        else:
+            print "Incorrect option"
+            return self
         
     def draw(self, screen, event, gametime):
         screen.fill([255, 255, 255])
@@ -207,8 +240,8 @@ class Scene(object):
 
         pygame.display.update()
         
-scene_dict = {"open": Scene(background="city", character=[("human", 0, 0), ("elf", 0, 1), ("elf", 1, 2)], text="open", buttons=[button_dict[0], button_dict[1], button_dict[2]]),
-              "0": Scene("city", [("human", 1, 0)], "hintro", [button_dict[3]]),
-              "1": Scene("city", [("elf", 1, 2)], "elfintro", [button_dict[3]]), # placeholder
-              "2": Scene("city", [("elf", 0, 1)], "hintro", [button_dict[3]]), # placeholder
-              "3": Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [button_dict[0]])}
+scene_dict = {"open": Scene(),
+              0: Scene("city", [("human", 1, 0)], "hintro", [3]),
+              1: Scene("city", [("elf", 1, 2)], "elfintro", [3]), # placeholder
+              2: Scene("city", [("elf", 0, 1)], "hintro", [3]), # placeholder
+              3: Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [0, 1])}

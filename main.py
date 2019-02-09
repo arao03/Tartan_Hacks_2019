@@ -18,7 +18,6 @@ def initData(data):
     data.buttons = set()
     data.gametime = 0
 
-
 def main():
     pygame.init()
     pygame.font.init()
@@ -35,22 +34,26 @@ def main():
     pygame.mixer.music.load(map.MUSIC_PATH)  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
-    for button in scene.buttons:
-        data.buttons.add(button)
 
     while not data.gameOver:
+        for key in pygame.key.get_pressed():
+            if key == pygame.K_a:
+                scene = scene.goLeft()
+            elif key == pygame.K_d:
+                scene = scene.goRight()
+            elif key == pygame.K_w:
+                scene = scene.gotCenter()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 data.gameOver = True
-            elif event.type == pygame.MOUSEBUTTONDOWN:
-                for button in data.buttons:
-                    if button.buttonPressed(event):
-                        scene = changeScene(button.id)
-                        print "Scene Changed: " + str(button.id)
-                        data.buttons = set()
-                        for button in scene.buttons:
-                            data.buttons.add(button)
-                        
+            elif event.type == pygame.K_DOWN:
+                if event.key == pygame.K_a:
+                    scene = scene.goLeft()
+                elif event.key == pygame.K_d:
+                    scene = scene.goRight()
+                elif event.key == pygame.K_w:
+                    scene = scene.gotCenter()
+                
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
         
