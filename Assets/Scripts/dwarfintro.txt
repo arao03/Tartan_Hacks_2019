@@ -1,21 +1,2 @@
-You have chosen to be a dwarf. 
-As a dwarf, you may consider yourself to be of the 
-“working-class” status. Like most dwarves you know, 
-you attend school for seven years. During that time, 
-you have become fluent in dwarvish, a purely spoken language, 
-and developed a working knowledge of the common language. 
-You are able to read it and write it to a passable degree. 
-You have also learned simple weaponry and self defense tactics, 
-like all other educated members of the society. 
-Because you are a dwarf, you were additionally trained in 
-metallurgy. Your family only has enough money to send either you, 
-or your younger brother to school beyond the traditional 
-seven years. After completing your seventh year in school, 
-you may choose to either continue your education, or let your 
-younger brother continue his, while you begin an apprenticeship. 
-You know that continuing your education likely means increased 
-interactions with humans, while beginning an apprenticeship 
-will mean interacting almost exclusively with dwarves. 
-At this point in your life, you have had very little interaction 
-with any race apart from your own. 
+You have chosen to be a dwarf. As a dwarf, you may consider yourself to be of the “working-class” status. Like most dwarves you know, you attend school for seven years. During that time, you have become fluent in dwarvish, a purely spoken language, and developed a working knowledge of the common language. You are able to read it and write it to a passable degree. You have also learned simple weaponry and self defense tactics, like all other educated members of the society. Because you are a dwarf, you were additionally trained in metallurgy. Your family only has enough money to send either you, or your younger brother to school beyond the traditional seven years. After completing your seventh year in school, you may choose to either continue your education, or let your younger brother continue his, while you begin an apprenticeship. You know that continuing your education likely means increased interactions with humans, while beginning an apprenticeship will mean interacting almost exclusively with dwarves. At this point in your life, you have had very little interaction with any race apart from your own. 
 

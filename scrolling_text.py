@@ -1,4 +1,5 @@
 import pygame, time
+import map
 pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
@@ -30,6 +31,7 @@ class DynamicText(object):
         self.text = text
         self._gen = text_generator(self.text)
         self.pos = pos
+        self.rendered = None
         self.autoreset = autoreset
         self.update()
 
@@ -50,18 +52,33 @@ class DynamicText(object):
 
 def parse_(filename):
     lines = []
-    script = open(filename,"r", encoding="utf-8")
+    script = open(filename,"r+", encoding="utf-8")
+    contents = script.read()
+    newcontents = ""
+    for i in range(0,len(contents)-map.SCREEN_LENGTH,map.SCREEN_LENGTH):
+        j = i + map.SCREEN_LENGTH
+        if contents[j] != " ":
+            while contents[j] != " ":
+                j -= 1
+        newcontents = newcontents + contents[i:j] + "\n"
+
+    script.seek(0)
+    script.truncate()
+    script.write(newcontents)
+    script.close()
+    script = open(filename, "r", encoding="utf-8")
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
+    script.close()
+    script = open(filename, "w", encoding="utf-8")
+    script.write(contents)
     return lines
 
-messagenumber = 0
+
+#messagenumber = 0
 def parse_script(lines,event,messagenumber,gametime):
-    #pauseflag = 0
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
     if lines[messagenumber].done and not (gametime % 220):
-            #if pauseflag == 0:
-                #pauseflag = 1
          messagenumber += 1
     lines[messagenumber].draw(screen)
     return messagenumber

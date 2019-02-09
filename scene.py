@@ -186,6 +186,7 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "dschoolyou": parse_(map.DWARF_SCHOOL_YOU)
                }
 
+
 textbox = TextBox()
 
 class Scene(object):
@@ -226,7 +227,6 @@ class Scene(object):
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
-
         self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
