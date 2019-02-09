@@ -249,7 +249,9 @@ class Scene(object):
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
-        self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
+        tempMessageNumber = parse_script(self.text, event, self.messagenumber, gametime)
+        if tempMessageNumber:
+            self.messagenumber = tempMessageNumber
 
         pygame.display.update()
 
