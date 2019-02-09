@@ -3,10 +3,10 @@ pygame.init()
 screen = pygame.display.set_mode((640, 480))
 clock = pygame.time.Clock()
 
-font = pygame.font.Font(None, 20)
+font = pygame.font.Font(None, 25)
 
 # raise the USEREVENT every 1000ms
-pygame.time.set_timer(pygame.USEREVENT, 100)
+pygame.time.set_timer(pygame.USEREVENT, 300)
 
 # generate a generator that scrolls through the letters
 # given a string foo, it will return
@@ -40,7 +40,7 @@ class DynamicText(object):
 
     def update(self):
         if not self.done:
-            try: self.rendered = self.font.render(next(self._gen), True, (0, 128, 0))
+            try: self.rendered = self.font.render(next(self._gen), True, (255, 255, 255))
             except StopIteration:
                 self.done = True
                 if self.autoreset: self.reset()
@@ -52,8 +52,7 @@ def parse_(filename):
     lines = []
     script = open(filename,"r")
     for l in script:
-        print(l)
-        lines.append(DynamicText(font,l,(20,250), autoreset=False))
+        lines.append(DynamicText(font,l.rstrip(),(25,250), autoreset=False))
     return lines
 
 messagenumber = 0
@@ -62,7 +61,7 @@ def parse_script(lines,event,messagenumber):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
     if lines[messagenumber].done == True:
             #if pauseflag == 0:
-         pygame.time.delay(500)
+         pygame.time.delay(2000)
                 #pauseflag = 1
          messagenumber += 1
     lines[messagenumber].draw(screen)
