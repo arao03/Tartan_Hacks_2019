@@ -50,8 +50,7 @@ def main():
         scene.draw(screen, event, data.gametime)
         
         time.tick(60)
-        data.gametime = (data.gametime + 1) % 128
-        print(data.gametime)
+        data.gametime = (data.gametime + 1) % 127
         pygame.display.flip()
     pygame.quit()
 
