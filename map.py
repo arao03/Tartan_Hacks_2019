@@ -32,3 +32,6 @@ BACKGROUND_CITY = './Assets/Backgrounds/opencity.png'
 BACKGROUND_HOUSE = './Assets/Backgrounds/house_background.png'
 BACKGROUND_FORGE = './Assets/Backgrounds/shop_background.png'
 BACKGROUND_SCHOOL = './Assets/Backgrounds/school_background.png'
+
+# SCRIPTS
+OPENING_SCRIPT = './Assets/Scripts/openscene.txt'

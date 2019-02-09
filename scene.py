@@ -1,6 +1,7 @@
 import os, sys, pygame
 from pygame.locals import *
 import map
+from scrolling_text import *
 
 pygame.init()
 screen = pygame.display.set_mode(map.SCREEN_SIZE, RESIZABLE)
@@ -132,12 +133,15 @@ character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRE
                   "elves": Character(map.ELF_PATH, 2),
                   "humans": Character(map.HUMAN_PATH, 2)}
 
+script_dict = {"open": parse_(map.OPENING_SCRIPT)}
+
 textbox = TextBox()
 
 class Scene(object):
     def __init__(self, background = None, character = None, expression = 0):        
         self.sprites = pygame.sprite.Group()
-        
+        self.messagenumber = 0
+        self.text = script_dict["open"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -153,7 +157,7 @@ class Scene(object):
             self.character = None
             
         
-    def draw(self, screen):
+    def draw(self, screen, event):
         if self.character is not None:
             self.sprites.add(self.character)
             
@@ -161,6 +165,7 @@ class Scene(object):
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
+        self.messagenumber = parse_script(self.text, event, self.messagenumber)
         
 
 
