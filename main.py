@@ -7,7 +7,7 @@ imcmahon, lkipp, ananyara, asteiner
 import pygame
 from scene import *
 from userinput import *
-
+from tts_basic import *
 
 def initData(data):
     data.gameOver = False
@@ -38,7 +38,7 @@ def main():
     subscription_key = "ba1a0f518f644cafb99630f0b734b42b"
     app = TextToSpeech(subscription_key,data.playerName)
     app.get_token()
-    app.save_audio("name")
+    app.save_audio()
     
     while not data.gameOver:        
         keys = pygame.key.get_pressed()
@@ -54,7 +54,9 @@ def main():
                     (scene, startScene) = scene.goCenter()
                 elif keys[pygame.K_SPACE]:
                     (scene, startScene) = scene.goTransition()
-                        
+                elif keys[pygame.K_ESCAPE]:
+                    data.gameOver = True
+                    continue;
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
         
