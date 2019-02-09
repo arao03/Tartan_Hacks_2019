@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="venv/lib/python3.6/site-packages/pygame/examples/macosx/aliens_app_example/English.lproj/MainMenu.nib"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
