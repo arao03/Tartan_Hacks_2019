@@ -317,6 +317,7 @@ audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
             }
         
 scene_dict = {"open": Scene(),
+              "e_intro": Scene("city", ),
               "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
               "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               #"dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
