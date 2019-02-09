@@ -134,7 +134,8 @@ character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRE
                   "elves": Character(map.ELF_PATH, 2),
                   "humans": Character(map.HUMAN_PATH, 2)}
 
-script_dict = {"open": parse_(map.OPENING_SCRIPT)}
+script_dict = {"open": parse_(map.OPENING_SCRIPT),
+               "hintro": parse_(map.HUMAN_INTRO)}
 
 textbox = TextBox()
 
@@ -143,7 +144,7 @@ class Scene(object):
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
-        self.text = script_dict["open"]
+        self.text = script_dict["hintro"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]

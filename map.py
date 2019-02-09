@@ -39,3 +39,4 @@ BACKGROUND_SCHOOL = './Assets/Backgrounds/school_background.png'
 
 # SCRIPTS
 OPENING_SCRIPT = './Assets/Scripts/openscene.txt'
+HUMAN_INTRO = './Assets/Scripts/humanintro.txt'
