@@ -159,7 +159,7 @@ class Scene(object):
             self.character = None
 
         
-    def draw(self, screen, event):
+    def draw(self, screen, event, gametime):
         if self.character is not None:
             self.sprites.add(self.character)
             
@@ -168,6 +168,6 @@ class Scene(object):
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
 
-        self.messagenumber = parse_script(self.text, event, self.messagenumber)
+        self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
