@@ -22,8 +22,9 @@ def main():
     initData(data)
     size = [800, 800]
     screen = pygame.display.set_mode(size)
-    pygame.display.set_caption("TH2019")
+    pygame.display.set_caption("TartanHacks 2019")
     time = pygame.time.Clock()
+
     pygame.mixer.music.load("music/menu.ogg")  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
