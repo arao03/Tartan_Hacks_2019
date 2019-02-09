@@ -38,6 +38,7 @@ def main():
     data.channel_speech = pygame.mixer.Channel(1)
     data.channel_speech.set_volume(1)
     playSound(map.MUSIC_PATH, data.channel_music, data.soundLibrary)  # This is where to look for music playing
+    playSound(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
     for button in scene.buttons:
         data.buttons.add(button)
 
@@ -58,7 +59,7 @@ def main():
         scene.draw(screen, event, data.gametime)
         
         time.tick(60)
-        data.gametime = (data.gametime + 1) % 127
+        data.gametime = (data.gametime + 1) % (2**12)
         pygame.display.update()
         pygame.display.flip()
     pygame.quit()

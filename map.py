@@ -3,6 +3,7 @@ MOUSE_VIS = 1
 SCREEN_SIZE = (540, 300)
 GAME_TITLE = "TH2019"
 MUSIC_PATH = "./Assets/Music/menu.ogg"
+WELCOME_AUDIO = "./Assets/Speech/audio_welcome.wav"
 
 # SPRITE VARS
 SPRITE_OFFSETS = (90, 240)
