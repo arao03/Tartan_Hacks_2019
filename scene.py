@@ -139,7 +139,7 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT)}
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, id, background = None, character = None, L = None, R = None, expression = 0):        
+    def __init__(self, id, background = None, character = None, expression = 0):        
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
@@ -149,9 +149,6 @@ class Scene(object):
             self.background = background_dict[background]
         else:
             self.background = background_dict["city"]
-            self.C = Scene(2, background = "city", character = "annabelle")
-        self.L = L
-        self.R = R
             
         # Set the character for the scene.
         if character is not None:
@@ -160,7 +157,7 @@ class Scene(object):
             self.sprites.add(self.character)
         else:
             self.character = None
-            
+
         
     def draw(self, screen, event):
         if self.character is not None:

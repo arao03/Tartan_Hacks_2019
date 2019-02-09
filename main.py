@@ -9,6 +9,9 @@ from scene import *
 from userinput import *
 
 
+def changeScene(buttonid):
+    return scene_dict[buttonid]
+
 def initData(data):
     data.gameOver = False
     data.imageLibrary = {}
@@ -27,11 +30,11 @@ def main():
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
-    scene = Scene()
+    scene = Scene(0)
     pygame.mixer.music.load(map.MUSIC_PATH)  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
-    data.buttons.add(Button((100, 100), (300, 300)))
+    data.buttons.add(Button(0, (100, 100), (300, 300)))
 
     while not data.gameOver:
         for event in pygame.event.get():
@@ -39,17 +42,17 @@ def main():
                 data.gameOver = True
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 for button in data.buttons:
-                    print(button.buttonPressed(event))
+                    if button.buttonPressed(event):
+                        scene = changeScene(button.id)
+                        
         screen.fill((255, 255, 255))
-        scene.draw(screen)
+        scene.draw(screen, event)
         
         time.tick(60)
         pygame.display.flip()
         
     
     pygame.quit()
-    print("hell yeah hit that button")
-
 
 if __name__ == "__main__":
     main()
