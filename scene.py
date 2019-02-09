@@ -305,4 +305,6 @@ scene_dict = {"open": Scene(),
               "hintro": Scene("city", [("human-1r", 1, 0)], "hintro", None, ["heduintro", ""),
               1: Scene("city", [("elf-1l", 1, 2)], "eintro", None, [3]), # placeholder
               2: Scene("city", [("elf-1l", 0, 1)], "hintro", None, [3]), # placeholder
-              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", None, [0, 1])}
+              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", None, [0, 1]),
+              "e_intro": Scene("city", )
+              }
