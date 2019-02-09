@@ -46,8 +46,9 @@ def getSound(path, library):
     if sound == None:
         filePath = path.replace("/", os.sep).replace("\\", os.sep)
         
-        try: sound = pygame.mixer.Sound(filePath)
-        except(pygame.error, message):
+        try: 
+            sound = pygame.mixer.Sound(filePath)
+        except (pygame.error, message):
             pass
         library[path] = sound
     return sound
@@ -354,7 +355,7 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "dbladeno": parse_(map.DWARF_BLADE_NO)
                }
     
-audio_dict = {"open": " peech/audio_welcome.wav",
+audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
               "hintro": "./Assets/Speech/audio_human_intro.wav",
               "heduintro": "./Assets/Speech/audio_human_education.wav",
               "hsit1elf": ["./Assets/Speech/audio_human_education_elf_1.wav", "./name.wav", "./Assets/Speech/audio_human_education_elf_2.wav"],
