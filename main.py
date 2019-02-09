@@ -54,6 +54,10 @@ def main():
                         data.buttons = set()
                         for button in scene.buttons:
                             data.buttons.add(button)
+            elif event.type == pygame.K_LSHIFT:
+                pass
+            elif event.type == pygame.K_RSHIFT:
+                pass
                         
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
