@@ -12,16 +12,17 @@ from userinput import *
 def changeScene(buttonid):
     return scene_dict[str(buttonid)]
 
+
 def initData(data):
     data.gameOver = False
     data.imageLibrary = {}
+    data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
 
 
 def main():
     pygame.init()
-    pygame.font.init()
 
     class Data(object): pass
     # Initialize an all-purpose data instance for the model
@@ -32,9 +33,11 @@ def main():
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
     scene = scene_dict["open"]
-    pygame.mixer.music.load(map.MUSIC_PATH)  # This is where to look for music playing
-    pygame.mixer.music.play(-1)
-    pygame.mixer.music.set_volume(.3)
+    data.channel_music = pygame.mixer.Channel(0)
+    data.channel_music.set_volume(1)
+    data.channel_speech = pygame.mixer.Channel(1)
+    data.channel_speech.set_volume(1)
+    playSound(map.MUSIC_PATH, data.channel_music, data.soundLibrary)  # This is where to look for music playing
     for button in scene.buttons:
         data.buttons.add(button)
 
@@ -46,7 +49,7 @@ def main():
                 for button in data.buttons:
                     if button.buttonPressed(event):
                         scene = changeScene(button.id)
-                        print "Scene Changed: " + str(button.id)
+                        print ("Scene Changed: " + str(button.id))
                         data.buttons = set()
                         for button in scene.buttons:
                             data.buttons.add(button)
@@ -59,6 +62,7 @@ def main():
         pygame.display.update()
         pygame.display.flip()
     pygame.quit()
+
 
 if __name__ == "__main__":
     main()

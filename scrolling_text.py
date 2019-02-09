@@ -50,7 +50,7 @@ class DynamicText(object):
 
 def parse_(filename):
     lines = []
-    script = open(filename,"r")
+    script = open(filename,"r", encoding="utf-8")
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     return lines

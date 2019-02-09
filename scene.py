@@ -25,6 +25,20 @@ def getImg(path, library):
         library[path] = image
     return image
 
+def getSound(path, library):
+    sound = library.get(path)
+    if sound == None:
+        filePath = path.replace("/", os.sep).replace("\\", os.sep)
+        sound = pygame.mixer.Sound(filePath)
+        library[path] = sound
+    return sound
+
+def playSound(path, channel, library):
+    channel.play(getSound(path, library))
+
+def stopSound(channel):
+    channel.stop()
+
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
@@ -186,17 +200,16 @@ class Scene(object):
                 chartmp.updateCharacter("position", pos)
                 self.sprites.add(chartmp)
         else:
-            print "Please provide characters as a list [left, right, center]"
+            print ("Please provide characters as a list [left, right, center]")
             raise SystemError
         
         # Set the buttons.
         if isinstance(buttons, list):
             self.buttons = buttons
         elif isinstance(character, list):
-            print "Please provide buttons for your character."
+            print ("Please provide buttons for your character.")
             raise SystemError
 
-        
     def draw(self, screen, event, gametime):
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
@@ -206,7 +219,14 @@ class Scene(object):
         self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
-        
+
+    def playSpeech(self, path, channel, library):
+        playSound(path, channel, library)
+
+    def stopPlayback(self, channel):
+        stopSound(channel)
+
+
 scene_dict = {"open": Scene(background="city", character=[("human", 0, 0), ("elf", 0, 1), ("elf", 1, 2)], text="open", buttons=[button_dict[0], button_dict[1], button_dict[2]]),
               "0": Scene("city", [("human", 1, 0)], "hintro", [button_dict[3]]),
               "1": Scene("city", [("elf", 1, 2)], "elfintro", [button_dict[3]]), # placeholder
