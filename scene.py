@@ -173,7 +173,7 @@ class Icon(pygame.sprite.Sprite):
     def __init__(self, file_name, position):
         self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
->>>>>>> fc600140030905bd3cf104d8792d1afebd5c2ff5
+
 
 
 textbox = TextBox()
@@ -221,7 +221,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[0]], True)
         else:
-            print "No left path"
+            print ("No left path")
             return (self, False)
     
     def goRight(self):
@@ -229,7 +229,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[1]], True)
         else:
-            print "No right path"
+            print ("No right path")
             return (self, False)
     
     def goCenter(self):
@@ -237,7 +237,7 @@ class Scene(object):
             self.stopPlayback(data.channel_speech)
             return (scene_dict[self.transitions[2]], True)
         else:
-            print "Please choose left or right"
+            print ("Please choose left or right")
             return (self, False)
         
     def goTransition(self):
@@ -328,10 +328,10 @@ scene_dict = {"open": Scene(),
               "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", None, ["esit1human", "esit1elf"]),
               "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", None, ["esit2human", "esit2elf"]),
-              "esit2human": Scene("house", ["annabelle-1"], "esit2human", None, []),
+              "esit2human": Scene("house", ["annabelle-l"], "esit2human", None, []),
               "esit2elf": Scene("house", [], "esit2elf", None, []),
               "esit1elf": Scene("house", [], "esit1elf", None, []),
-              "etutintro": Scene("house", ["forvik-1"], "etutintro", None, ["esmile1dwarf", "esmile1elf"]),
+              "etutintro": Scene("house", ["forvik-l"], "etutintro", None, ["esmile1dwarf", "esmile1elf"]),
               "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", None, ["esmile2dwarf", "esmile2elf"]),
               "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", None, []),
               "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", None, []),

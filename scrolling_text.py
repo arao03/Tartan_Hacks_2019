@@ -52,8 +52,9 @@ class DynamicText(object):
 
 def parse_(filename):
     lines = []
-    script = open(filename,"r+", encoding="utf-8")
+    script = open(filename,"r+", encoding='utf-8', errors='ignore')
     contents = script.read()
+    #contents = unicode(contents,errors='ignore')
     newcontents = ""
     for i in range(0,len(contents)-map.SCREEN_LENGTH,map.SCREEN_LENGTH):
         j = i + map.SCREEN_LENGTH
@@ -66,11 +67,11 @@ def parse_(filename):
     script.truncate()
     script.write(newcontents)
     script.close()
-    script = open(filename, "r", encoding="utf-8")
+    script = open(filename, "r")
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     script.close()
-    script = open(filename, "w", encoding="utf-8")
+    script = open(filename, "w")
     script.truncate()
     script.write(contents)
     return lines
