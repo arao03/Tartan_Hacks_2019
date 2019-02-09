@@ -177,6 +177,17 @@ class Icon(pygame.sprite.Sprite):
 
 textbox = TextBox()
 
+class Title(object):
+    def __init__(self):
+        self.background = background_dict["city"]
+    
+    def draw(self):
+        screen.fill([255, 255, 255])
+        screen.blit(self.background.image, (0,0))
+        self.sprites.draw(screen)
+
+        pygame.display.update()
+
 class Scene(object):
     def __init__(self, background = None, character = None, text = None, audio = -1, transitions = None):
         self.id = id
