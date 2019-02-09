@@ -23,6 +23,10 @@ def main():
     initData(data)
     size = map.SCREEN_SIZE
     screen = pygame.display.set_mode(size)
+    pygame.display.set_caption("TartanHacks 2019")
+    time = pygame.time.Clock()
+
+    pygame.mixer.music.load("music/menu.ogg")  # This is where to look for music playing
     scene = Scene()
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
@@ -41,6 +45,7 @@ def main():
         time.tick(60)
         pygame.display.flip()
     pygame.quit()
+    print("hell yeah hit that button")
 
 
 if __name__ == "__main__":
