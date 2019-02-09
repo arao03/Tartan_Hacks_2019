@@ -157,8 +157,17 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
                "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
                "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN),
-               "elfintro": parse_(map.ELF_INTRO),
-               "elftrintro": parse_(map.ELF_TRAD_INTRO)
+               "eintro": parse_(map.ELF_INTRO),
+               "etrintro": parse_(map.ELF_TRAD_INTRO),
+               "esit1human": parse_(map.ELF_SIT1_HUMAN),
+               "esit2human": parse_(map.ELF_SIT2_HUMAN),
+               "esit2elf": parse_(map.ELF_SIT2_ELF),
+               "esit1elf": parse_(map.ELF_SIT1_ELF),
+               "etutintro": parse_(map.ELF_TUT_INTRO),
+               "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
+               "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
+               "esmile2elf": parse_(map.ELF_SMILE2_ELF),
+               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
                }
 
 textbox = TextBox()
@@ -186,14 +195,14 @@ class Scene(object):
                 chartmp.updateCharacter("position", pos)
                 self.sprites.add(chartmp)
         else:
-            print "Please provide characters as a list [left, right, center]"
+            print ("Please provide characters as a list [left, right, center]")
             raise SystemError
         
         # Set the buttons.
         if isinstance(buttons, list):
             self.buttons = buttons
         elif isinstance(character, list):
-            print "Please provide buttons for your character."
+            print ("Please provide buttons for your character.")
             raise SystemError
 
         
@@ -209,6 +218,6 @@ class Scene(object):
         
 scene_dict = {"open": Scene(background="city", character=[("human", 0, 0), ("elf", 0, 1), ("elf", 1, 2)], text="open", buttons=[button_dict[0], button_dict[1], button_dict[2]]),
               "0": Scene("city", [("human", 1, 0)], "hintro", [button_dict[3]]),
-              "1": Scene("city", [("elf", 1, 2)], "elfintro", [button_dict[3]]), # placeholder
+              "1": Scene("city", [("elf", 1, 2)], "eintro", [button_dict[3]]), # placeholder
               "2": Scene("city", [("elf", 0, 1)], "hintro", [button_dict[3]]), # placeholder
               "3": Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [button_dict[0]])}

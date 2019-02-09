@@ -46,7 +46,7 @@ def main():
                 for button in data.buttons:
                     if button.buttonPressed(event):
                         scene = changeScene(button.id)
-                        print "Scene Changed: " + str(button.id)
+                        print ("Scene Changed: " + str(button.id))
                         data.buttons = set()
                         for button in scene.buttons:
                             data.buttons.add(button)
