@@ -54,7 +54,7 @@ def main():
                     (scene, startScene) = scene.goCenter()
                 elif keys[pygame.K_SPACE]:
                     (scene, startScene) = scene.goTransition()
-                        
+
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
         
