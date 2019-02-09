@@ -15,6 +15,8 @@ def initData(data):
     data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
+    data.playerName = input("What is your name? \n")
+
 
 def main():
     pygame.init()
@@ -32,7 +34,12 @@ def main():
     data.channel_music.set_volume(.5)
     playSound(map.MUSIC_PATH, data.channel_music, data.soundLibrary)  # This is where to look for music playing
     #playSound(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
-
+    
+    subscription_key = "ba1a0f518f644cafb99630f0b734b42b"
+    app = TextToSpeech(subscription_key)
+    app.get_token()
+    app.save_audio("name")
+    
     while not data.gameOver:        
         keys = pygame.key.get_pressed()
         for event in pygame.event.get():
