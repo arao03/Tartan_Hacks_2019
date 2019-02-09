@@ -168,10 +168,13 @@ class Character(pygame.sprite.Sprite):
         
     dict = property(get_dict, set_dict)
 
+
 class Icon(pygame.sprite.Sprite):
     def __init__(self, file_name, position):
         self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
+>>>>>>> fc600140030905bd3cf104d8792d1afebd5c2ff5
+
 
 textbox = TextBox()
 
@@ -248,7 +251,6 @@ class Scene(object):
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
-
         self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()

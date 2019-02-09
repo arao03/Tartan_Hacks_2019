@@ -1,6 +1,8 @@
 # MAIN VARS
 MOUSE_VIS = 1
 SCREEN_SIZE = (540, 300)
+SCREEN_WIDTH, SCREEN_HEIGHT = SCREEN_SIZE
+SCREEN_LENGTH = SCREEN_WIDTH//11 +1
 GAME_TITLE = "TH2019"
 MUSIC_PATH = "./Assets/Music/menu.ogg"
 
@@ -67,3 +69,7 @@ ELF_SMILE1_DWARF = './Assets/Scripts/elfsmile1d.txt'
 ELF_SMILE2_DWARF = './Assets/Scripts/elfsmile2d.txt'
 ELF_SMILE2_ELF = './Assets/Scripts/elfsmile2e.txt'
 ELF_SMILE1_ELF = './Assets/Scripts/elfsmile1e.txt'
+
+# DWARF SCRIPTS
+DWARF_INTRO = './Assets/Scripts/dwarfintro.txt'
+DWARF_SCHOOL_YOU = './Assets/Scripts/dwarfschy.txt'
