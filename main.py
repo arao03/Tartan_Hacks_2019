@@ -57,6 +57,7 @@ def main():
                 elif keys[pygame.K_ESCAPE]:
                     data.gameOver = True
                     continue;
+
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)
         
