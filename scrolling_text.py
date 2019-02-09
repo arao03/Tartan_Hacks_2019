@@ -60,7 +60,6 @@ def parse_(filename):
         j = start + map.SCREEN_LENGTH
         if j > len(contents):
             l = contents[start:len(contents)]
-            print(l)
             lines.append(DynamicText(font, l, (30, 250), autoreset=False))
             return lines
         if contents[j] != " ":
@@ -74,9 +73,9 @@ def parse_(filename):
 def parse_script(lines,event,messagenumber,gametime):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
     if messagenumber >= len(lines)-1:
-        lines[messagenumber].draw(screen)
-        return None
-    if lines[messagenumber].done and not (gametime % 130):
+        lines[len(lines)-1].draw(screen)
+        return len(lines)-1
+    if lines[messagenumber].done and not (gametime % 115):
          messagenumber += 1
     lines[messagenumber].draw(screen)
     return messagenumber
