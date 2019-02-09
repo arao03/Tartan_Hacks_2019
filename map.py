@@ -37,11 +37,20 @@ BACKGROUND_HOUSE = './Assets/Backgrounds/house_background.png'
 BACKGROUND_FORGE = './Assets/Backgrounds/shop_background.png'
 BACKGROUND_SCHOOL = './Assets/Backgrounds/school_background.png'
 
-# SCRIPTS
+# HUMAN SCRIPTS
 OPENING_SCRIPT = './Assets/Scripts/openscene.txt'
 HUMAN_INTRO = './Assets/Scripts/humanintro.txt'
 HUMAN_ED_INTRO = './Assets/Scripts/humanedintro.txt'
 HUMAN_SIT1_ELF = './Assets/Scripts/humansit1e.txt'
 HUMAN_SIT2_ELF = './Assets/Scripts/humansit2e.txt'
+HUMAN_SIT2_HUMAN = './Assets/Scripts/humansit2h.txt'
 HUMAN_SIT1_HUMAN = './Assets/Scripts/humansit1h.txt'
 HUMAN_TR_INTRO = './Assets/Scripts/humantrintro.txt'
+HUMAN_TEAM1_DWARF = './Assets/Scripts/humanteam1d.txt'
+HUMAN_TEAM2_DWARF = './Assets/Scripts/humanteam2d.txt'
+HUMAN_TEAM2_HUMAN = './Assets/Scripts/humanteam2h.txt'
+HUMAN_TEAM1_HUMAN = './Assets/Scripts/humanteam1h.txt'
+
+# ELF SCRIPTS
+ELF_INTRO = './Assets/Scripts/elfintro.txt'
+ELF_TRAD_INTRO = './Assets/Scripts/elftradintro.txt'

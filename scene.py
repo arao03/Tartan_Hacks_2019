@@ -149,8 +149,16 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "heduintro": parse_(map.HUMAN_ED_INTRO),
                "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
                "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
+               "hsit2human": parse_(map.HUMAN_SIT2_HUMAN),
                "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
-               "htradeintro": parse_(map.HUMAN_TR_INTRO)}
+               "htradeintro": parse_(map.HUMAN_TR_INTRO),
+               "hteam1dwarf": parse_(map.HUMAN_TEAM1_DWARF),
+               "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
+               "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
+               "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN),
+               "elfintro": parse_(map.ELF_INTRO),
+               "elftrintro": parse_(map.ELF_TRAD_INTRO)
+               }
 
 textbox = TextBox()
 
@@ -163,7 +171,7 @@ class Scene(object):
         if text is not None:
             self.text = script_dict[text]
         else:
-            self.text = script_dict["open"]
+            self.text = script_dict["elfintro"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
