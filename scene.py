@@ -206,13 +206,13 @@ class Scene(object):
                 chartmp = character_dict[char]
                 self.sprites.add(chartmp)
         else:
-            for char in ["human-1r", "dwarf-0c", "elf-0l"]: # Default chars
+            for char in ["human-1l", "dwarf-0c", "elf-0l"]: # Default chars
                 chartmp = character_dict[char]
                 self.sprites.add(chartmp)
                 
     def startScene(self):
         if self.audio is not None:
-            self.playSpeech(audio_dict[audio], data.channel_speech, data.soundLibrary)
+            self.playSpeech(audio_dict[self.audio], data.channel_speech, data.soundLibrary)
         else:
             self.playSpeech(audio_dict["open"], data.channel_speech, data.soundLibrary)
     
@@ -275,15 +275,15 @@ character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXP
                   "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
                   "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
                   "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
-                  "elf-0r2": Character(map.ELF_PATH, 2, 3, 0),
-                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
-                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
-                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
-                  "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "elf-0r2": Character(map.ELF_PATH, 2, 3, 0, True),
+                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1),
+                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0),
+                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1, True),
+                  "human-0r": Character(map.HUMAN_PATH, 2, 1, 0, True),
                   "human-0r2": Character(map.HUMAN_PATH, 2, 3, 0, True),
-                  "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
-                  "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
-                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1),
+                  "human-1r": Character(map.HUMAN_PATH, 2, 1, 1),
+                  "human-0l": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "human-1l": Character(map.HUMAN_PATH, 2, 0, 1, True),
                   "dwarf-0r": Character(map.DWARF_PATH, 1, 0, 0),
                   "dwarf-0l": Character(map.DWARF_PATH, 2, 1, 0, True),
                   "dwarf-0c": Character(map.DWARF_PATH, 2, 2, 0, True)}
@@ -316,15 +316,20 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                }
 
 audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
+              "hintro": "./Assets/Speech/audio_human_intro.wav",
+              "heduintro": "./Assets/Speech/audio_human_education",
+              "hsit1elf": "./Assets/Speech/audio_human_education_elf_1",
+              "hsit2elf": "./Assets/Speech/audio_human_education_elf_2"
             }
         
 scene_dict = {"open": Scene(),
-              "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
+              "hintro": Scene("city", ["human-1l"], "hintro", "hintro", ["heduintro", "htradeintro"]),
               #"dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
-              "heduintro": Scene("school", ["kaylin-l", "human-1r"], "heduintro", None, ["hsit1elf", "hsit1human"]),
-              "hsit1elf": Scene("school", ["kaylin-l"], "hsit1elf", None, ["hsit1elft1"]),
+              "heduintro": Scene("school", ["kaylin-l", "human-1r"], "heduintro", "heduintro", ["hsit1elf", "hsit1human"]),
+              "hsit1elf": Scene("school", ["kaylin-l"], "hsit1elf", "hsit1elf", ["hsit1elft1"]),
               "hsit1elft1": Scene("school", ["elf-0r2", "elf-1r"], "hsit1elft1", None, ["hsit1elft2"]),
-              "hsit1elft2": Scene("school", ["kaylin-l", "human-0r2", "human-1r"], "hsit1elft2", None, []),
+              "hsit1elft2": Scene("school", ["kaylin-l", "human-0r2", "human-1r"], "hsit1elft2", None, ["hsitelf2"]),
+              "hsit2elf": Scene("school", ["kaylin-l"], "hsit2elf", "hsit2elf", []),
               "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", None, ["esit1human", "esit1elf"]),
               "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", None, ["esit2human", "esit2elf"]),
