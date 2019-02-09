@@ -61,7 +61,7 @@ def parse_script(lines,event,messagenumber):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
     if lines[messagenumber].done == True:
             #if pauseflag == 0:
-         pygame.time.delay(2000)
+         time.sleep(1.5)
                 #pauseflag = 1
          messagenumber += 1
     lines[messagenumber].draw(screen)
