@@ -2,6 +2,7 @@ import os, requests, time
 from xml.etree import ElementTree
 try: input = raw_input
 except NameError: pass
+
 class TextToSpeech(object):
     def __init__(self, subscription_key):
         self.subscription_key = subscription_key

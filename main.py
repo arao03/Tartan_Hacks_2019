@@ -19,12 +19,11 @@ def main():
     # Initialize an all-purpose data instance for the model
     data = Data()
     initData(data)
-    size = [1500, 800]
+    size = [800, 800]
     screen = pygame.display.set_mode(size)
     pygame.display.set_caption("TH2019")
     time = pygame.time.Clock()
-    # Music Creds: EA, Stainless Studios, Risk Factions Menu Music
-    pygame.mixer.music.load("music/menu.ogg")
+    pygame.mixer.music.load("music/menu.ogg")  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
 
