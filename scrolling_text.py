@@ -50,7 +50,7 @@ class DynamicText(object):
 
 def parse_(filename):
     lines = []
-    script = open(filename,"r")
+    script = open(filename,"r", encoding="utf-8")
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     return lines
@@ -59,7 +59,7 @@ messagenumber = 0
 def parse_script(lines,event,messagenumber,gametime):
     #pauseflag = 0
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    if lines[messagenumber].done and not gametime:
+    if lines[messagenumber].done and not (gametime % 220):
             #if pauseflag == 0:
                 #pauseflag = 1
          messagenumber += 1
