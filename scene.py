@@ -122,6 +122,7 @@ textbox = TextBox()
 
 class Scene(object):
     def __init__(self, background = None, character = None, expression = 0):        
+        
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -136,7 +137,7 @@ class Scene(object):
             self.character = None
             
             
-    def draw(self):
+    def draw(self, screen):
         all_sprites = pygame.sprite.Group()
         all_sprites.add(annabelle)
         
