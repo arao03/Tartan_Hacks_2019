@@ -55,7 +55,8 @@ def parse_(filename):
     script = open(filename,"r", encoding='utf-8', errors='ignore')
     contents = script.read()
     start = 0
-    for i in range(0,len(contents)-map.SCREEN_LENGTH,map.SCREEN_LENGTH):
+    j=0
+    while j < len(contents)-map.SCREEN_LENGTH:
         j = start + map.SCREEN_LENGTH
         if contents[j] != " ":
             while contents[j] != " ":
@@ -69,9 +70,9 @@ def parse_(filename):
 #messagenumber = 0
 def parse_script(lines,event,messagenumber,gametime):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    if messagenumber >= len(lines):
+    if messagenumber >= len(lines)-1:
         lines[messagenumber].draw(screen)
-        return len(lines)
+        return None
     if lines[messagenumber].done and not (gametime % 130):
          messagenumber += 1
     lines[messagenumber].draw(screen)

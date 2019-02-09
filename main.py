@@ -15,6 +15,8 @@ def initData(data):
     data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
+    data.playerName = input("What is your name? \n")
+
 
 def main():
     pygame.init()
