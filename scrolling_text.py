@@ -63,11 +63,13 @@ def parse_(filename):
                 j -= 1
         newcontents = newcontents + contents[i:j] + "\n"
 
+    script = open(filename+"tmp", "w", encoding="utf-8")
     script.seek(0)
+    
     script.truncate()
     script.write(newcontents)
     script.close()
-    script = open(filename, "r", encoding="utf-8")
+    script = open(filename+"tmp", "r", encoding="utf-8")
     for l in script:
         lines.append(DynamicText(font,l,(30,250), autoreset=False))
     script.close()
