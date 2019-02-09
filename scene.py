@@ -338,7 +338,6 @@ audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
         
 scene_dict = {"open": Scene(),
               "hintro": Scene("city", ["human-1l"], "hintro", "hintro", ["heduintro", "htradeintro"]),
-              #"dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
               "heduintro": Scene("school", ["kaylin-l", "human-1r"], "heduintro", "heduintro", ["hsit1elf", "hsit1human"]),
               "hsit1elf": Scene("school", ["kaylin-l"], "hsit1elf", "hsit1elf", ["hsit1elft1"]),
               "hsit1elft1": Scene("school", ["elf-0r2", "elf-1r"], "hsit1elft1", None, ["hsit1elft2"]),
@@ -354,5 +353,15 @@ scene_dict = {"open": Scene(),
               "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", None, ["esmile2dwarf", "esmile2elf"]),
               "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", None, []),
               "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", None, []),
-              "esmile1elf": Scene("house", [], "esmile1elf", None, [])
+              "esmile1elf": Scene("house", [], "esmile1elf", None, []),
+              "dintro": Scene("city", ["forvik-l"], "dintro", None, ["dschoolintro", "dschoolbro"]),
+              "dschoolintro": Scene("school", ["annabelle-l", "dwarf-0r"], "dschoolintro", None, ["dsit1human", "dsit1dwarf"]),
+              "dsit1human": Scene("school", ["annabelle-l", "dwarf-0r"], "dsit1human", None, ["dsit2human, dsit2dwarf"]),
+              "dsit2human": Scene("forge", ["annabelle-l"], "dsit2human", None, []),
+              "dsit2dwarf": Scene("forge", [], "dsit2dwarf", None, []),
+              "dsit1dwarf": Scene("forge", [], "dsit1dwarf", None, []),
+              "dschoolbro": Scene("forge", [], "dschoolbro", None, ["dschoolintro", "dadvintro"]),
+              "dadvintro": Scene("forge", ["kaylin-l"], "dadvintro", None, ["dbladeyes", "dbladeno"]),
+              "dbladeyes": Scene("forge", ["kaylin-l"], "dbladeyes", None, []),
+              "dbladeno": Scene("forge", [], "dbladeno", None, [])
               }
