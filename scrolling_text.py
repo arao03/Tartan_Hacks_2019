@@ -55,7 +55,8 @@ def parse_(filename):
     script = open(filename,"r", encoding='utf-8', errors='ignore')
     contents = script.read()
     start = 0
-    for i in range(0,len(contents)-map.SCREEN_LENGTH,map.SCREEN_LENGTH):
+    j=0
+    while j < len(contents)-map.SCREEN_LENGTH:
         j = start + map.SCREEN_LENGTH
         if contents[j] != " ":
             while contents[j] != " ":
@@ -63,6 +64,7 @@ def parse_(filename):
         l = contents[start:j]
         lines.append(DynamicText(font,l,(30,250), autoreset=False))
         start = j
+        print(start)
     return lines
 
 
