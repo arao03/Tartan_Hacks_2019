@@ -300,10 +300,20 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                }
         
 scene_dict = {"open": Scene(),
-              "e_intro": Scene("city", ),
               "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
-              "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               "dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
               "heduintro": Scene("school", ["kaylin-l", "human-0l"], "heduintro", None, ["hsit1elf", "hsit1human"]),
-              "hsit1elf": Scene("school", [""])
+              "hsit1elf": Scene("school", [""]),
+
+              "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
+              "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", None, ["esit1human", "esit1elf"]),
+              "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", None, ["esit2human", "esit2elf"]),
+              "esit2human": Scene("house", ["annabelle-1"], "esit2human", None, []),
+              "esit2elf": Scene("house", [], "esit2elf", None, []),
+              "esit1elf": Scene("house", [], "esit1elf", None, []),
+              "etutintro": Scene("house", ["forvik-1"], "etutintro", None, ["esmile1dwarf", "esmile1elf"]),
+              "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", None, ["esmile2dwarf", "esmile2elf"]),
+              "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", None, []),
+              "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", None, []),
+              "esmile1elf": Scene("house", [], "esmile1elf", None, [])
               }
