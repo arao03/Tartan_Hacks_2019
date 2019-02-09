@@ -24,9 +24,9 @@ def main():
     size = map.SCREEN_SIZE
     screen = pygame.display.set_mode(size)
     scene = Scene()
-    pygame.display.set_caption("TH2019")
+    pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
-    pygame.mixer.music.load("Music/menu.ogg")  # This is where to look for music playing
+    pygame.mixer.music.load("./Music/menu.ogg")  # This is where to look for music playing
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
 
