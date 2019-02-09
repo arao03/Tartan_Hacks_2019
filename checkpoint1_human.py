@@ -1,5 +1,6 @@
 import os, sys, pygame
 from pygame.locals import *
+import spritesheet
 
 pygame.init()
 screen = pygame.display.set_mode((540,300), RESIZABLE)

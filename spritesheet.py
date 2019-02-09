@@ -1,17 +1,28 @@
 import pygame
 
 class spritesheet(object):
-    def __init__(self, filename):
+    def __init__(self, filename, x, y):
         try:
+            self.x = x
+            self.y = y
             self.sheet = pygame.image.load(filename).convert()
         except pygame.error, message:
             print 'Unable to load spritesheet image:', filename
             raise SystemExit, message
+        
     # Load a specific image from a specific rectangle
-    def image_at(self, rectangle, colorkey = None):
+    def image_at(self, rectangle=None, offset=None colorkey = None):
         "Loads image from x,y,x+offset,y+offset"
-        rect = pygame.Rect(rectangle)
-        image = pygame.Surface(rect.size).convert()
+        if offset is None:
+            rect = pygame.Rect(rectangle)
+        elif rect is None:
+            (xoff, yoff) = offset
+            rect = pygame.Rect((self.x,self.y,self.x + xoff, self.y + yoff))
+        else:
+            print 'Need offset value or rectangle value'
+            raise SystemExit, message
+        
+        image = pygame.sprite.Sprite(rect.size).convert()
         image.blit(self.sheet, (0, 0), rect)
         if colorkey is not None:
             if colorkey is -1:
@@ -19,9 +30,11 @@ class spritesheet(object):
             image.set_colorkey(colorkey, pygame.RLEACCEL)
         return image
     # Load a whole bunch of images and return them as a list
+    
     def images_at(self, rects, colorkey = None):
         "Loads multiple images, supply a list of coordinates" 
         return [self.image_at(rect, colorkey) for rect in rects]
+    
     # Load a whole strip of images
     def load_strip(self, rect, image_count, colorkey = None):
         "Loads a strip of images and returns them as a list"
