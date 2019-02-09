@@ -4,6 +4,7 @@ from userinput import *
 import map
 from scrolling_text import *
 from operator import pos
+from tts_basic import *
 
 def initData(data):
     data.gameOver = False
@@ -187,7 +188,7 @@ class Scene(object):
         if transitions is not None:
             self.transitions = transitions
         else:
-            self.transitions = ["hintro", "eintro"]
+            self.transitions = ["hintro", "eintro", "dintro"]
         # Set the text for the scene.
         if text is not None:
             self.text = script_dict[text]
@@ -209,7 +210,10 @@ class Scene(object):
                 self.sprites.add(chartmp)
                 
     def startScene(self):
-        if self.audio is not None:
+        if isinstance(self.audio, list):
+            for audio in self.audio:
+                self.queueSpeech(audio_dict[audio], data.channel_speech, data.soundLibrary)
+        elif self.audio is not None:
             self.playSpeech(audio_dict[self.audio], data.channel_speech, data.soundLibrary)
         else:
             self.playSpeech(audio_dict["open"], data.channel_speech, data.soundLibrary)
@@ -257,6 +261,9 @@ class Scene(object):
 
     def playSpeech(self, path, channel, library):
         playSound(path, channel, library)
+        
+    def queueSpeech(self, path, channel, library):
+        channel.queue(getSound(path, library))                         
 
     def stopPlayback(self, channel):
         stopSound(channel)
@@ -330,14 +337,40 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "dbladeyes": parse_(map.DWARF_BLADE_YES),
                "dbladeno": parse_(map.DWARF_BLADE_NO)
                }
-
+    
 audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
               "hintro": "./Assets/Speech/audio_human_intro.wav",
               "heduintro": "./Assets/Speech/audio_human_education.wav",
-              "hsit1elf": "./Assets/Speech/audio_human_education_elf_1.wav",
-              "hsit2elf": "./Assets/Speech/audio_human_education_elf_2.wav",
-              "htradeintro": "./Assets/Speech/audio_humantrade.wav",
-              "hteam1dwarf": "./Assets/Speech/audio_trade_dwarf_1.wav"
+              "hsit1elf": ["./Assets/Speech/audio_human_education_elf_1.wav", "name.wav", "./Assets/Speech/audio_human_education_elf_2.wav"],
+              "hsit2elf": "./Assets/Speech/audio_human_education_elf_Kaylin.wav",
+              "hsit1human": "./Assets/Speech/audio_human_education_humans.wav",
+              "hsit2human": "./Assets/Speech/audio_human_education_elf_human.wav",
+              "htradeintro": "./Assets/Speech/audio_human_trade.wav",
+              "hteam1dwarf": ["./Assets/Speech/audio_human_trade_dwarf_1.wav", "name.wav", "./Assets/Speech/audio_human_trade_dwarf_2.wav"],
+              "hteam2dwarf": "./Assets/Speech/audio_human_trade_dwarf_Fovik.wav",
+              "hteam2human": "./Assets/Speech/audio_human_trade_dwarf_humans.wav",
+               "hteam1human": "./Assets/Speech/audio_human_trade_human.wav",
+               "eintro": "./Assets/Speech/audio_elf_intro.wav",
+               "etrintro": "./Assets/Speech/audio_elf_TE.wav",
+               "esit1human": ["./Assets/Speech/audio_elf_TE_human1.wav", "name.wav", "./Assets/Speech/audio_elf_TE_human2.wav"],
+               "esit2human": "./Assets/Speech/audio_elf_TE_human_Annabelle.wav",
+               "esit2elf": "./Assets/Speech/audio_elf_TE_human_elf.wav",
+               "esit1elf": "./Assets/Speech/audio_elf_TE_elves.wav",
+               "etutintro": "./Assets/Speech/audio_elf_tutor.wav",
+               "esmile1dwarf": "./Assets/Speech/audio_elf_tutor_smile.wav",
+               "esmile2dwarf": "./Assets/Speech/audio_elf_tutor_smile_defend.wav",
+               "esmile2elf": "./Assets/Speech/audio_elf_tutor_smile_silent.wav",
+               "esmile1elf": "./Assets/Speech/audio_elf_tutor_turn.wav",
+               "dintro": "./Assets/Speech/audio_dwarf_intro.wav",
+               "dschoolintro": "./Assets/Speech/audio_dwarf_education.wav",
+               "dsit1dwarf": "./Assets/Speech/audio_dwarf_educaion_dwarves.wav",
+               "dsit1human": "./Assets/Speech/audio_dwarf_education_human_1.wav",
+               "dsit2dwarf": "./Assets/Speech/audio_dwarf_education_human_dwarf.wav",
+               "dsit2human": "./Assets/Speech/audio_dwarf_education_human_Annabelle.wav",
+               "dschoolbro": "./Assets/Speech/audio_dwarf_brother.wav",
+               "dadvintro": "./Assets/Speech/audio_dwarf_brother_adventure1.wav",
+               "dbladeyes": "./Assets/Speech/audio_dwarf_brother_adventure_blade.wav",
+               "dbladeno": "./Assets/Speech/audio_dwarf_brother_adventure_silent.wav"
             }
         
 scene_dict = {"open": Scene(),
@@ -347,6 +380,7 @@ scene_dict = {"open": Scene(),
               "hsit1elft1": Scene("school", ["elf-0r2", "elf-1r"], "hsit1elft1", None, ["hsit1elft2"]),
               "hsit1elft2": Scene("school", ["kaylin-l", "human-0r2", "human-1r"], "hsit1elft2", None, ["hsit2elf", "hsit2human"]),
               "hsit2elf": Scene("school", ["kaylin-l"], "hsit2elf", "hsit2elf", []),
+<<<<<<< HEAD
               "hsit1human": Scene("school", ["human-0r2", "human-1r"], "hsit1human", None, []),
               "hsit2human": Scene("school", ["human-0r2", "human-1r"], "hsit2human", None, []),
               "htradeintro": Scene("forge", ["forvik-l", "human-1r"], "htradeintro", None, ["hteam1dwarf"]),
@@ -381,4 +415,29 @@ scene_dict = {"open": Scene(),
               "dadvintro": Scene("forge", ["kaylin-l"], "dadvintro", None, ["dbladeyes", "dbladeno"]),
               "dbladeyes": Scene("forge", ["kaylin-l"], "dbladeyes", None, []),
               "dbladeno": Scene("forge", [], "dbladeno", None, [])
+=======
+              "hsit1human": Scene("school", ["human-0r2", "human-1r"], "hsit1human", "hsit1human", []),
+              "hsit2human": Scene("school", ["human-0r2", "human-1r"], "hsit2human", "hsit2human", []),
+              "eintro": Scene("city", ["elf-1l"], "eintro", "eintro", ["etrintro", "etutintro"]),
+              "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", "etrintro", ["esit1human", "esit1elf"]),
+              "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", "esit1human", ["esit2human", "esit2elf"]),
+              "esit2human": Scene("house", ["annabelle-l"], "esit2human", "esit2human", []),
+              "esit2elf": Scene("house", [], "esit2elf", "esit2elf", []),
+              "esit1elf": Scene("house", [], "esit1elf", "esit1elf", []),
+              "etutintro": Scene("house", ["forvik-l"], "etutintro", "etutintro", ["esmile1dwarf", "esmile1elf"]),
+              "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", "esmile1dwarf", ["esmile2dwarf", "esmile2elf"]),
+              "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", "esmile2dwarf", []),
+              "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", "esmile2elf", []),
+              "esmile1elf": Scene("house", [], "esmile1elf", "esmile1elf", []),
+              "dintro": Scene("city", ["forvik-l"], "dintro", "dintro", ["dschoolintro", "dschoolbro"]),
+              "dschoolintro": Scene("school", ["annabelle-l", "dwarf-0r"], "dschoolintro", "dschoolintro", ["dsit1human", "dsit1dwarf"]),
+              "dsit1human": Scene("school", ["annabelle-l", "dwarf-0r"], "dsit1human", "dsit1human", ["dsit2human, dsit2dwarf"]),
+              "dsit2human": Scene("forge", ["annabelle-l"], "dsit2human", "dsit2human", []),
+              "dsit2dwarf": Scene("forge", [], "dsit2dwarf", "dsit2dwarf", []),
+              "dsit1dwarf": Scene("forge", [], "dsit1dwarf", "dsit1dwarf", []),
+              "dschoolbro": Scene("forge", [], "dschoolbro", "dschoolbro", ["dschoolintro", "dadvintro"]),
+              "dadvintro": Scene("forge", ["kaylin-l"], "dadvintro", "dadvintro", ["dbladeyes", "dbladeno"]),
+              "dbladeyes": Scene("forge", ["kaylin-l"], "dbladeyes", "dbladeyes", []),
+              "dbladeno": Scene("forge", [], "dbladeno", "dbladeno", [])
+>>>>>>> 99153119e65f9bf25470c5206beca24f6e127a7c
               }
