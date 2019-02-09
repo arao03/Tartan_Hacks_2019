@@ -1,6 +1,7 @@
 import os, sys, pygame
 from pygame.locals import *
-import spritesheet
+from spritesheet import *
+import map
 
 pygame.init()
 screen = pygame.display.set_mode((540,300), RESIZABLE)
@@ -27,17 +28,26 @@ class Background(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         #self.rect.left, self.rect.top = location
 
-class Human(pygame.sprite.Sprite):
-    def __init__(self):
+class Character(pygame.sprite.Sprite):
+    def __init__(self, file_name, expression_count):
         pygame.sprite.Sprite.__init__(self)
-        sheet = pygame.image.load('./Assets/Sprites/annabelleexpsheet.png')
-        self.image = 
-        self.rect = [0,0]
+        self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = -1)
+        self.expression = 0 # Default
+        
+        self.rect = pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS)
+        self.image = self.images[self.expression]
+        
+    def chg_expression(self, expression):
+        self.expression = expression
+        
+    def update(self, expression):
+        self.image = self.images[self.expression]
+        
 
 BackGround1 = Background('./Assets/Backgrounds/house_background.png')
 clock = pygame.time.Clock()
 dead = False
-annabelle = Human()
+annabelle = Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS)
 all_sprites = pygame.sprite.Group()
 all_sprites.add(annabelle)
 
