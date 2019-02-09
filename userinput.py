@@ -16,8 +16,7 @@ class Button(object):
         if (self.x < event.pos[0] < self.x + self.w) \
                 and (self.y < event.pos[1] < self.y + self.h):
             return True
-        else:
-            return False
+        return False
 
     def __hash__(self):
         return hash((self.x, self.y, self.h, self.w))
