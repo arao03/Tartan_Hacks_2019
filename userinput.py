@@ -2,6 +2,7 @@
 TartanHacks 2019
 imcmahon, lkipp, ananyara, asteiner
 '''
+import map
 
 class Button(object):
     def __init__(self, id, coordinates, size):
@@ -25,3 +26,9 @@ class Button(object):
         return isinstance(other, Button) \
                 and self.x == other.x and self.y == other.y  \
                 and self.h == other.h and self.w == other.w
+                
+                
+button_dict = { 0: Button(0, map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
+                1: Button(1, map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS),
+                2: Button(2, map.SPRITE_LOCATION_RIGHT, map.SPRITE_OFFSETS)
+                }

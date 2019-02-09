@@ -4,10 +4,6 @@ from userinput import *
 import map
 from scrolling_text import *
 
-pygame.init()
-screen = pygame.display.set_mode(map.SCREEN_SIZE, RESIZABLE)
-pygame.mouse.set_visible(map.MOUSE_VIS)
-
 def posSwitch(argument):
     switcher = {
             0: pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
@@ -134,18 +130,18 @@ class Character(pygame.sprite.Sprite):
         self.image = self.images[self.expression]
         
         
-background_dic = {"city": Background(map.BACKGROUND_CITY),
+background_dict = {"city": Background(map.BACKGROUND_CITY),
                    "house": Background(map.BACKGROUND_HOUSE),
                    "forge": Background(map.BACKGROUND_FORGE),
                    "school": Background(map.BACKGROUND_SCHOOL)}
 
-character_dic = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
+character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
                   "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
                   "elves": Character(map.ELF_PATH, 2),
                   "humans": Character(map.HUMAN_PATH, 2)}
 
-script_dic = {"open": parse_(map.OPENING_SCRIPT)}
+script_dict = {"open": parse_(map.OPENING_SCRIPT)}
 
 textbox = TextBox()
 
