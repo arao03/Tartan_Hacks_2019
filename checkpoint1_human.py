@@ -29,12 +29,16 @@ class Background(pygame.sprite.Sprite):
 class Human(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('./Assets/Sprites/Annabelleleft.png')
-        self.rect = self.image.get_rect()
+        sheet = pygame.image.load('./Assets/Sprites/annabelleexpsheet.png')
+        self.image = 
+        self.rect = [0,0]
 
 BackGround1 = Background('./Assets/Backgrounds/house_background.png')
 clock = pygame.time.Clock()
 dead = False
+annabelle = Human()
+all_sprites = pygame.sprite.Group()
+all_sprites.add(annabelle)
 
 while (dead == False):
     for event in pygame.event.get():
@@ -42,6 +46,7 @@ while (dead == False):
             dead = True
     screen.fill([255, 255, 255])
     screen.blit(BackGround1.image, (0,0))
+    all_sprites.draw(screen)
 
     pygame.display.update()
     clock.tick(60)
