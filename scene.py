@@ -118,9 +118,10 @@ character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRE
                   "elves": Character(map.ELF_PATH, 2),
                   "humans": Character(map.HUMAN_PATH, 2)}
 
+textbox = TextBox()
+
 class Scene(object):
-    def __init__(self, background = None, character = None, expression = 0):
-        
+    def __init__(self, background = None, character = None, expression = 0):        
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -130,5 +131,18 @@ class Scene(object):
         # Set the character for the scene.
         if character is not None:
             self.character = character_dict[character]
+            self.character.chg_expression(expression)
         else:
             self.character = None
+            
+            
+    def draw(self):
+        all_sprites = pygame.sprite.Group()
+        all_sprites.add(annabelle)
+        
+        screen.fill([255, 255, 255])
+        screen.blit(self.background.image, (0,0))
+        all_sprites.draw(screen)
+        screen.blit(textbox.image, textbox.rect)
+
+        pygame.display.update()
