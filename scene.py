@@ -174,8 +174,6 @@ class Icon(pygame.sprite.Sprite):
         self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
 
-
-
 textbox = TextBox()
 
 class Scene(object):
