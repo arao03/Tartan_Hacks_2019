@@ -1,2 +1,5 @@
-You have chosen to sit down beside the elf. She smiles at you a little wider this time, and asks "Whats your name?". You tell her, "My name is __name__ ". My name is Kaylin, she says. A few other students trickle in - there are six humans and four elves in total. After class, Kaylin waves goodbye and disappears. 
-
+You have chosen to sit down beside the elf.
+es
+you
+ a little wider this time, and
+. You tell her, "My
