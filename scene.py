@@ -18,7 +18,6 @@ def getImg(path, library):
         library[path] = image
     return image
 
-
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
@@ -99,14 +98,12 @@ class Background(pygame.surface.Surface):
         pygame.surface.Surface.__init__(self, map.SCREEN_SIZE)
         self.image = pygame.image.load(image_file).convert()
         self.rect = self.image.get_rect()
-        #self.rect.left, self.rect.top = location
         
 class TextBox(pygame.surface.Surface):
     def __init__(self):
         self.image = pygame.image.load(map.TEXTBOX_PATH).convert()
         self.rect = pygame.Rect(map.TEXTBOX_RECT)
         self.image.set_colorkey(self.image.get_at((0,0)))
-        
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, file_name, expression_count, offsets = None):
@@ -139,6 +136,7 @@ textbox = TextBox()
 
 class Scene(object):
     def __init__(self, background = None, character = None, expression = 0):        
+        self.sprites = pygame.sprite.Group()
         
         # Set the background for the scene.
         if background is not None:
@@ -150,18 +148,20 @@ class Scene(object):
         if character is not None:
             self.character = character_dict[character]
             self.character.chg_expression(expression)
+            self.sprites.add(self.character)
         else:
             self.character = None
             
-            
-    def draw(self, screen):
-        all_sprites = pygame.sprite.Group()
-        if self.character is not None:
-            all_sprites.add(self.character)
         
+    def draw(self, screen):
+        if self.character is not None:
+            self.sprites.add(self.character)
+            
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
-        all_sprites.draw(screen)
+        self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
+        
+
 
         pygame.display.update()
