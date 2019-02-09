@@ -52,28 +52,28 @@ class DynamicText(object):
 
 def parse_(filename):
     lines = []
-    script = open(filename,"r+", encoding='utf-8', errors='ignore')
+    script = open(filename,"r", encoding='utf-8', errors='ignore')
     contents = script.read()
     #contents = unicode(contents,errors='ignore')
-    newcontents = ""
+    #newcontents = ""
     for i in range(0,len(contents)-map.SCREEN_LENGTH,map.SCREEN_LENGTH):
         j = i + map.SCREEN_LENGTH
         if contents[j] != " ":
             while contents[j] != " ":
-                j -= 1
-        newcontents = newcontents + contents[i:j] + "\n"
-
-    script.seek(0)
-    script.truncate()
-    script.write(newcontents)
-    script.close()
-    script = open(filename, "r", encoding="utf-8")
-    for l in script:
+                j += -1
+        l = contents[i:j]
+        print(l)
+    #script.seek(0)
+    #script.truncate()
+    #script.write(newcontents)
+    #script.close()
+    #script = open(filename, "r", encoding="utf-8")
+    #for l in script:
         lines.append(DynamicText(font,l,(30,250), autoreset=False))
-    script.close()
-    script = open(filename, "w", encoding='utf-8')
-    script.truncate()
-    script.write(contents)
+    #script.close()
+    #script = open(filename, "w", encoding='utf-8')
+    #script.truncate()
+    #script.write(contents)
     return lines
 
 
@@ -82,9 +82,9 @@ def parse_script(lines,event,messagenumber,gametime):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
     if lines[messagenumber].done and not (gametime % 130):
          messagenumber += 1
-    if messagenumber >= len(lines):
-        return 0
-    else:
-        lines[messagenumber].draw(screen)
-        return messagenumber
+    #if messagenumber >= len(lines):
+     #   return
+    #else:
+    lines[messagenumber].draw(screen)
+    return messagenumber
 
