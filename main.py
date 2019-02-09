@@ -15,7 +15,7 @@ def initData(data):
     data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
-    data.playerName = input("What is your name? \n")
+    data.playerName = input("What is your name?\n")
 
 
 def main():
@@ -36,7 +36,7 @@ def main():
     #playSound(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
     
     subscription_key = "ba1a0f518f644cafb99630f0b734b42b"
-    app = TextToSpeech(subscription_key)
+    app = TextToSpeech(subscription_key,data.playerName)
     app.get_token()
     app.save_audio("name")
     
