@@ -8,6 +8,14 @@ pygame.init()
 screen = pygame.display.set_mode(map.SCREEN_SIZE, RESIZABLE)
 pygame.mouse.set_visible(map.MOUSE_VIS)
 
+def posSwitch(argument):
+    switcher = {
+            0: pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
+            1: pygame.Rect(map.SPRITE_LOCATION_RIGHT, map.SPRITE_OFFSETS),
+            2: pygame.Rect(map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS)
+        }
+    return switcher[argument]
+
 def getImg(path, library):
     # https://nerdparadise.com/programming/pygame/part2
 
@@ -108,14 +116,17 @@ class TextBox(pygame.surface.Surface):
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, file_name, expression_count, offsets = None):
+    def __init__(self, file_name, expression_count, position = 0, offsets = None):
         pygame.sprite.Sprite.__init__(self)
         self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = -1)
         self.expression = 0 # Default
         
-        self.rect = pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS)
+        self.rect = posSwitch(position)
         self.image = self.images[self.expression]
         
+    def chg_pos(self, position):
+        self.rect = posSwitch(position)
+
     def chg_expression(self, expression):
         self.expression = expression
         
@@ -123,12 +134,12 @@ class Character(pygame.sprite.Sprite):
         self.image = self.images[self.expression]
         
         
-background_dict = {"city": Background(map.BACKGROUND_CITY),
+background_dic = {"city": Background(map.BACKGROUND_CITY),
                    "house": Background(map.BACKGROUND_HOUSE),
                    "forge": Background(map.BACKGROUND_FORGE),
                    "school": Background(map.BACKGROUND_SCHOOL)}
 
-character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
+character_dic = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
                   "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
                   "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
                   "elves": Character(map.ELF_PATH, 2),
@@ -145,11 +156,15 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, id, background = None, character = None, expression = 0):        
+    def __init__(self, background = None, character = None, text = None, expression = 0):        
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
-        self.text = script_dict["hsit1human"]
+        # Set the text for the scene.
+        if text is not None:
+            self.text = script_dict[text]
+        else:
+            self.text = script_dict["open"]
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -158,9 +173,10 @@ class Scene(object):
             
         # Set the character for the scene.
         if character is not None:
-            self.character = character_dict[character]
-            self.character.chg_expression(expression)
-            self.sprites.add(self.character)
+            for char in character:
+                cha = character_dict[char]
+                cha.chg_expression(expression)
+                self.sprites.add(cha)
         else:
             self.character = None
 
