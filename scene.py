@@ -7,7 +7,8 @@ from operator import pos
 
 def initData(data):
     data.gameOver = False
-    data.library = {}
+    data.imageLibrary = {}
+    data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
     
@@ -36,10 +37,24 @@ def getImg(path, library):
         library[path] = image
     return image
 
+def getSound(path, library):
+    sound = library.get(path)
+    if sound == None:
+        filePath = path.replace("/", os.sep).replace("\\", os.sep)
+        sound = pygame.mixer.Sound(filePath)
+        library[path] = sound
+    return sound
+
+def playSound(path, channel, library):
+    channel.play(getSound(path, library))
+
+def stopSound(channel):
+    channel.stop()
+
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = getImg(filename, data.library)
+            self.sheet = getImg(filename, data.imageLibrary)
         except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
             raise (SystemExit, message)
@@ -114,17 +129,17 @@ class SpriteStripAnim(object):
 class Background(pygame.surface.Surface):
     def __init__(self, image_file):
         pygame.surface.Surface.__init__(self, map.SCREEN_SIZE)
-        self.image = getImg(image_file, data.library)
+        self.image = getImg(image_file, data.imageLibrary)
         self.rect = self.image.get_rect()
         
 class TextBox(pygame.surface.Surface):
     def __init__(self):
-        self.image = getImg(map.TEXTBOX_PATH, data.library)
+        self.image = getImg(map.TEXTBOX_PATH, data.imageLibrary)
         self.rect = pygame.Rect(map.TEXTBOX_RECT)
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, file_name, expression_count, position = 0, expression = 0):
+    def __init__(self, file_name, expression_count, position = 0, expression = 0, flipped = False):
         pygame.sprite.Sprite.__init__(self)
         self.val_dict = {"position": position,
                          "expression": expression}
@@ -132,7 +147,10 @@ class Character(pygame.sprite.Sprite):
         self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = (255,255,255))
             
         self.rect = posSwitch(self.val_dict["position"])
-        self.image = self.images[self.val_dict["expression"]]
+        if flipped:
+            self.image = pygame.transform.flip(self.images[self.val_dict["expression"]], True, False)
+        else:
+            self.image = self.images[self.val_dict["expression"]]
         
     def get_dict(self):
         return self.val_dict
@@ -149,7 +167,7 @@ class Character(pygame.sprite.Sprite):
 
 class Icon(pygame.sprite.Sprite):
     def __init__(self, file_name, position):
-        self.image = getImg(file_name, data.library)
+        self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
@@ -157,11 +175,20 @@ background_dict = {"city": Background(map.BACKGROUND_CITY),
                    "forge": Background(map.BACKGROUND_FORGE),
                    "school": Background(map.BACKGROUND_SCHOOL)}
 
-character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
-                  "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
-                  "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
-                  "elf": Character(map.ELF_PATH, 2),
-                  "human": Character(map.HUMAN_PATH, 2)}
+character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 0, 0),
+                  "kaylin-l": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 0, 0),
+                  "forvik-l": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 0, 0),
+                  "annabelle-r": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 1, 0, True),
+                  "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
+                  "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
+                  "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
+                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
+                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
+                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
+                  "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
+                  "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
+                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1)}
 
 script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hintro": parse_(map.HUMAN_INTRO),
@@ -175,18 +202,28 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
                "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
                "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN),
-               "elfintro": parse_(map.ELF_INTRO),
-               "elftrintro": parse_(map.ELF_TRAD_INTRO)
+               "eintro": parse_(map.ELF_INTRO),
+               "etrintro": parse_(map.ELF_TRAD_INTRO),
+               "esit1human": parse_(map.ELF_SIT1_HUMAN),
+               "esit2human": parse_(map.ELF_SIT2_HUMAN),
+               "esit2elf": parse_(map.ELF_SIT2_ELF),
+               "esit1elf": parse_(map.ELF_SIT1_ELF),
+               "etutintro": parse_(map.ELF_TUT_INTRO),
+               "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
+               "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
+               "esmile2elf": parse_(map.ELF_SMILE2_ELF),
+               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
                }
 
 textbox = TextBox()
 
 class Scene(object):
-    def __init__(self, background = None, character = None, text = None, buttons= None, transitions = []):
+    def __init__(self, background = None, character = None, text = None, audio = None, transitions = None):
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
         
+        # Set transitions.
         if transitions is not None:
             self.transitions = transitions
         else:
@@ -196,6 +233,11 @@ class Scene(object):
             self.text = script_dict[text]
         else:
             self.text = script_dict["open"]
+        # Set the text for the scene.
+        if audio is not None:
+            self.audio = map.WELCOME_AUDIO
+        else:
+            self.audio = map.WELCOME_AUDIO
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -205,13 +247,11 @@ class Scene(object):
         if character is not None:
             for (char, exp, pos) in character:
                 chartmp = character_dict[char]
-#                 chartmp.updateCharacter("expression", exp)
-#                 chartmp.updateCharacter("position", pos)
                 chartmp.dict["expression"] = exp
                 chartmp.dict["position"] = pos
                 self.sprites.add(chartmp)
         else:
-            for (char, exp, pos) in [("human", 1, 0), ("elf", 0, 1), ("elf", 1, 2)]: # Default chars
+            for (char, exp, pos) in [("human-1r", 1, 0), ("elf-0l", 1, 2)]: # Default chars
                 chartmp = character_dict[char]
                 chartmp.dict["expression"] = exp
                 chartmp.dict["position"] = pos
@@ -230,6 +270,7 @@ class Scene(object):
             print "Incorrect option"
             return self
         
+        
     def draw(self, screen, event, gametime):
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
@@ -239,9 +280,15 @@ class Scene(object):
         self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
+
+    def playSpeech(self, path, channel, library):
+        playSound(path, channel, library)
+
+    def stopPlayback(self, channel):
+        stopSound(channel)
         
 scene_dict = {"open": Scene(),
-              0: Scene("city", [("human", 1, 0)], "hintro", [3]),
-              1: Scene("city", [("elf", 1, 2)], "elfintro", [3]), # placeholder
-              2: Scene("city", [("elf", 0, 1)], "hintro", [3]), # placeholder
-              3: Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [0, 1])}
+              0: Scene("city", [("human-1r", 1, 0)], "hintro", [3]),
+              1: Scene("city", [("elf-1l", 1, 2)], "eintro", [3]), # placeholder
+              2: Scene("city", [("elf-1l", 0, 1)], "hintro", [3]), # placeholder
+              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", [0, 1])}

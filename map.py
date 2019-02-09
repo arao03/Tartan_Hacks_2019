@@ -3,6 +3,7 @@ MOUSE_VIS = 1
 SCREEN_SIZE = (540, 300)
 GAME_TITLE = "TH2019"
 MUSIC_PATH = "./Assets/Music/menu.ogg"
+WELCOME_AUDIO = "./Assets/Speech/audio_welcome.wav"
 
 # SPRITE VARS
 SPRITE_OFFSETS = (90, 240)
@@ -54,3 +55,12 @@ HUMAN_TEAM1_HUMAN = './Assets/Scripts/humanteam1h.txt'
 # ELF SCRIPTS
 ELF_INTRO = './Assets/Scripts/elfintro.txt'
 ELF_TRAD_INTRO = './Assets/Scripts/elftradintro.txt'
+ELF_SIT1_HUMAN = './Assets/Scripts/elfsit1h.txt'
+ELF_SIT2_HUMAN = './Assets/Scripts/elfsit2h.txt'
+ELF_SIT2_ELF = './Assets/Scripts/elfsit2e.txt'
+ELF_SIT1_ELF = './Assets/Scripts/elfsit1e.txt'
+ELF_TUT_INTRO = './Assets/Scripts/elftutintro.txt'
+ELF_SMILE1_DWARF = './Assets/Scripts/elfsmile1d.txt'
+ELF_SMILE2_DWARF = './Assets/Scripts/elfsmile2d.txt'
+ELF_SMILE2_ELF = './Assets/Scripts/elfsmile2e.txt'
+ELF_SMILE1_ELF = './Assets/Scripts/elfsmile1e.txt'
