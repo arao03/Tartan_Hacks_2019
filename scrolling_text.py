@@ -67,19 +67,16 @@ def parse_(filename):
     script.truncate()
     script.write(newcontents)
     script.close()
-<<<<<<< HEAD
     script = open(filename, "r", encoding="utf-8")
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     script.close()
     script = open(filename, "w", encoding="utf-8")
-=======
     script = open(filename, "r", encoding='utf-8')
     for l in script:
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     script.close()
     script = open(filename, "w", encoding='utf-8')
->>>>>>> 830ba386c666b18a5ae195d0bea33476e2810d8f
     script.truncate()
     script.write(contents)
     return lines
