@@ -105,3 +105,30 @@ class Character(pygame.sprite.Sprite):
         
     def update(self, expression):
         self.image = self.images[self.expression]
+        
+        
+background_dict = {"city": Background(map.BACKGROUND_CITY),
+                   "house": Background(map.BACKGROUND.HOUSE),
+                   "forge": Background(map.BACKGROUND_FORGE),
+                   "school": Background(map.BRACKGROUND_SCHOOL)}
+
+character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
+                  "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
+                  "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
+                  "elves": Character(map.ELF_PATH, 2),
+                  "humans": Character(map.HUMAN_PATH, 2)}
+
+class Scene(object):
+    def __init__(self, background = None, character = None, expression = 0):
+        
+        # Set the background for the scene.
+        if background is not None:
+            self.background = background_dict[background]
+        else:
+            self.background = background_dict["city"]
+            
+        # Set the character for the scene.
+        if character is not None:
+            self.character = character_dict[character]
+        else:
+            self.character = None
