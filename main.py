@@ -16,6 +16,7 @@ def initData(data):
     data.gameOver = False
     data.imageLibrary = {}
     data.buttons = set()
+    data.gametime = 0
 
 
 def main():
@@ -46,12 +47,12 @@ def main():
                         scene = changeScene(button.id)
                         
         screen.fill((255, 255, 255))
-        scene.draw(screen, event)
+        scene.draw(screen, event, data.gametime)
         
         time.tick(60)
+        data.gametime = (data.gametime + 1) % 128
+        print(data.gametime)
         pygame.display.flip()
-        
-    
     pygame.quit()
 
 if __name__ == "__main__":

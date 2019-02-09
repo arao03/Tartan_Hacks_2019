@@ -56,12 +56,11 @@ def parse_(filename):
     return lines
 
 messagenumber = 0
-def parse_script(lines,event,messagenumber):
+def parse_script(lines,event,messagenumber,gametime):
     #pauseflag = 0
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    if lines[messagenumber].done == True:
+    if lines[messagenumber].done and not gametime:
             #if pauseflag == 0:
-         time.sleep(1.5)
                 #pauseflag = 1
          messagenumber += 1
     lines[messagenumber].draw(screen)
