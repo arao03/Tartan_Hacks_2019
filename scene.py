@@ -211,8 +211,8 @@ class Scene(object):
                 
     def startScene(self):
         if isinstance(self.audio, list):
-            for audio in self.audio:
-                self.queueSpeech(audio_dict[audio], data.channel_speech, data.soundLibrary)
+            for aud in self.audio:
+                self.queueSpeech(audio_dict[aud], data.channel_speech, data.soundLibrary)
         elif self.audio is not None:
             self.playSpeech(audio_dict[self.audio], data.channel_speech, data.soundLibrary)
         else:
@@ -320,6 +320,7 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "esit2elf": parse_(map.ELF_SIT2_ELF),
                "esit1elf": parse_(map.ELF_SIT1_ELF),
                "etutintro": parse_(map.ELF_TUT_INTRO),
+               "etutintrot": parse_(map.ELF_TUT_INTRO_TRANS),
                "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
                "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
                "esmile2elf": parse_(map.ELF_SMILE2_ELF),
@@ -388,7 +389,8 @@ scene_dict = {"open": Scene(),
               "esit2human": Scene("house", ["annabelle-l"], "esit2human", "esit2human", []),
               "esit2elf": Scene("house", [], "esit2elf", "esit2elf", []),
               "esit1elf": Scene("house", [], "esit1elf", "esit1elf", []),
-              "etutintro": Scene("house", ["forvik-l"], "etutintro", "etutintro", ["esmile1dwarf", "esmile1elf"]),
+              "etutintro": Scene("house", ["elf-0l"], "etutintro", "etutintro", ["etutintrot"]),
+              "etutintrot": Scene("forge", ["forvik-l"], "etutintrot", None, ["esmile1dwarf", "esmile1elf"]),
               "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", "esmile1dwarf", ["esmile2dwarf", "esmile2elf"]),
               "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", "esmile2dwarf", []),
               "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", "esmile2elf", []),
