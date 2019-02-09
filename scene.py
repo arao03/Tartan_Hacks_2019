@@ -11,6 +11,8 @@ def initData(data):
     data.soundLibrary = {}
     data.buttons = set()
     data.gametime = 0
+    data.channel_speech = pygame.mixer.Channel(1)
+    data.channel_speech.set_volume(1)
     
 class Data(object): pass
     # Initialize an all-purpose data instance for the model
@@ -222,6 +224,7 @@ class Scene(object):
         self.id = id
         self.sprites = pygame.sprite.Group()
         self.messagenumber = 0
+        self.audio = audio
         
         # Set transitions.
         if transitions is not None:
@@ -233,11 +236,6 @@ class Scene(object):
             self.text = script_dict[text]
         else:
             self.text = script_dict["open"]
-        # Set the text for the scene.
-        if audio is not None:
-            self.audio = map.WELCOME_AUDIO
-        else:
-            self.audio = map.WELCOME_AUDIO
         # Set the background for the scene.
         if background is not None:
             self.background = background_dict[background]
@@ -256,20 +254,36 @@ class Scene(object):
                 chartmp.dict["expression"] = exp
                 chartmp.dict["position"] = pos
                 self.sprites.add(chartmp)
+                
+    def startScene(self):
+        if self.audio is not None:
+            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
+        else:
+            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
     
     def goLeft(self):
-        return scene_dict[self.transitions[0]]
+        if len(self.transitions) > 0:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[0]], True)
+        else:
+            print "No left path"
+            return (self, False)
     
     def goRight(self):
-        return scene_dict[self.transitions[1]]
+        if len(self.transitions) > 1:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[1]], True)
+        else:
+            print "No right path"
+            return (self, False)
     
     def goCenter(self):
-        if len(transitions > 2):
-            return scene_dict[self.transitions[2]]
+        if len(self.transitions) > 2:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[2]], True)
         else:
-            print "Incorrect option"
-            return self
-        
+            print "Please choose left or right"
+            return (self, False)
         
     def draw(self, screen, event, gametime):
         screen.fill([255, 255, 255])
@@ -288,7 +302,7 @@ class Scene(object):
         stopSound(channel)
         
 scene_dict = {"open": Scene(),
-              0: Scene("city", [("human-1r", 1, 0)], "hintro", [3]),
-              1: Scene("city", [("elf-1l", 1, 2)], "eintro", [3]), # placeholder
-              2: Scene("city", [("elf-1l", 0, 1)], "hintro", [3]), # placeholder
-              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", [0, 1])}
+              "hintro": Scene("city", [("human-1r", 1, 0)], "hintro", None, ["heduintro", ""),
+              1: Scene("city", [("elf-1l", 1, 2)], "eintro", None, [3]), # placeholder
+              2: Scene("city", [("elf-1l", 0, 1)], "hintro", None, [3]), # placeholder
+              3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", None, [0, 1])}
