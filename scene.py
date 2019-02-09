@@ -44,7 +44,9 @@ def getImg(path, library):
 def getSound(path, library):
     sound = library.get(path)
     if sound == None:
-        filePath = path.replace("/", os.sep).replace("\\", os.sep)
+        try: filePath = path.replace("/", os.sep).replace("\\", os.sep)
+        except (error, message):
+            pass
         sound = pygame.mixer.Sound(filePath)
         library[path] = sound
     return sound
