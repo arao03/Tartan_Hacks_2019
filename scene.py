@@ -32,9 +32,9 @@ class SpriteSheet(object):
     def __init__(self, filename):
         try:
             self.sheet = pygame.image.load(filename).convert()
-        except pygame.error, message:
+        except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
-            raise SystemExit, message
+            raise (SystemExit, message)
     # Load a specific image from a specific rectangle
     def image_at(self, rectangle, colorkey = None):
         "Loads image from x,y,x+offset,y+offset"
@@ -177,12 +177,15 @@ class Scene(object):
             self.character = None
 
         
-    def draw(self, screen, event):
+    def draw(self, screen, event, gametime):
+        if self.character is not None:
+            self.sprites.add(self.character)
+            
         screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
         self.sprites.draw(screen)
         screen.blit(textbox.image, textbox.rect)
 
-        self.messagenumber = parse_script(self.text, event, self.messagenumber)
+        self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
 
         pygame.display.update()
