@@ -23,7 +23,8 @@ def posSwitch(argument):
     switcher = {
             0: pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
             1: pygame.Rect(map.SPRITE_LOCATION_RIGHT, map.SPRITE_OFFSETS),
-            2: pygame.Rect(map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS)
+            2: pygame.Rect(map.SPRITE_LOCATION_CENTER, map.SPRITE_OFFSETS),
+            3: pygame.Rect(map.SPRITE_LOCATION_RIGHT2, map.SPRITE_OFFSETS)
         }
     return switcher[argument]
 
@@ -188,7 +189,7 @@ class Scene(object):
         if transitions is not None:
             self.transitions = transitions
         else:
-            self.transitions = [0,1,2]
+            self.transitions = ["hintro", "eintro"]
         # Set the text for the scene.
         if text is not None:
             self.text = script_dict[text]
@@ -205,15 +206,15 @@ class Scene(object):
                 chartmp = character_dict[char]
                 self.sprites.add(chartmp)
         else:
-            for char in ["human-1r", "elf-0l"]: # Default chars
+            for char in ["human-1r", "dwarf-0c", "elf-0l"]: # Default chars
                 chartmp = character_dict[char]
                 self.sprites.add(chartmp)
                 
     def startScene(self):
         if self.audio is not None:
-            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
+            self.playSpeech(audio_dict[audio], data.channel_speech, data.soundLibrary)
         else:
-            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
+            self.playSpeech(audio_dict["open"], data.channel_speech, data.soundLibrary)
     
     def goLeft(self):
         if len(self.transitions) > 0:
@@ -237,6 +238,12 @@ class Scene(object):
             return (scene_dict[self.transitions[2]], True)
         else:
             print "Please choose left or right"
+            return (self, False)
+        
+    def goTransition(self):
+        if len(self.transitions) == 1:
+            return (scene_dict[self.transitions[0]], True)
+        else:
             return (self, False)
         
     def draw(self, screen, event, gametime):
@@ -268,18 +275,25 @@ character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXP
                   "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
                   "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
                   "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
+                  "elf-0r2": Character(map.ELF_PATH, 2, 3, 0),
                   "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
                   "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
                   "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
                   "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "human-0r2": Character(map.HUMAN_PATH, 2, 3, 0, True),
                   "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
                   "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
-                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1)}
+                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1),
+                  "dwarf-0r": Character(map.DWARF_PATH, 1, 0, 0),
+                  "dwarf-0l": Character(map.DWARF_PATH, 2, 1, 0, True),
+                  "dwarf-0c": Character(map.DWARF_PATH, 2, 2, 0, True)}
         
 script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hintro": parse_(map.HUMAN_INTRO),
                "heduintro": parse_(map.HUMAN_ED_INTRO),
                "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
+               "hsit1elft1": parse_(map.HUMAN_SIT1_ELF_TRANS1),
+               "hsit1elft2": parse_(map.HUMAN_SIT1_ELF_TRANS2),
                "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
                "hsit2human": parse_(map.HUMAN_SIT2_HUMAN),
                "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
@@ -300,13 +314,17 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "esmile2elf": parse_(map.ELF_SMILE2_ELF),
                "esmile1elf": parse_(map.ELF_SMILE1_ELF)
                }
+
+audio_dict = {"open": "./Assets/Speech/audio_welcome.wav",
+            }
         
 scene_dict = {"open": Scene(),
               "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
-              "dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
-              "heduintro": Scene("school", ["kaylin-l", "human-0l"], "heduintro", None, ["hsit1elf", "hsit1human"]),
-              "hsit1elf": Scene("school", [""]),
-
+              #"dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
+              "heduintro": Scene("school", ["kaylin-l", "human-1r"], "heduintro", None, ["hsit1elf", "hsit1human"]),
+              "hsit1elf": Scene("school", ["kaylin-l"], "hsit1elf", None, ["hsit1elft1"]),
+              "hsit1elft1": Scene("school", ["elf-0r2", "elf-1r"], "hsit1elft1", None, ["hsit1elft2"]),
+              "hsit1elft2": Scene("school", ["kaylin-l", "human-0r2", "human-1r"], "hsit1elft2", None, []),
               "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
               "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", None, ["esit1human", "esit1elf"]),
               "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", None, ["esit2human", "esit2elf"]),

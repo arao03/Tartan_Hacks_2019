@@ -40,12 +40,14 @@ def main():
             if event.type == pygame.QUIT:
                 data.gameOver = True
             if event.type == pygame.KEYDOWN:
-                if keys[pygame.K_a] or keys[pygame.K_LSHIFT] or keys[pygame.K_LEFT]:
+                if keys[pygame.K_a] or keys[pygame.K_LEFT]:
                     (scene, startScene) = scene.goLeft()
-                elif keys[pygame.K_d] or keys[pygame.K_RSHIFT] or keys[pygame.K_RIGHT]:
+                elif keys[pygame.K_d] or keys[pygame.K_RIGHT]:
                     (scene, startScene) = scene.goRight()
-                elif keys[pygame.K_w] or keys[pygame.K_SPACE] or keys[pygame.K_DOWN]:
+                elif keys[pygame.K_w] or keys[pygame.K_DOWN]:
                     (scene, startScene) = scene.goCenter()
+                elif keys[pygame.K_SPACE]:
+                    (scene, startScene) = scene.goTransition()
                         
         screen.fill((255, 255, 255))
         scene.draw(screen, event, data.gametime)

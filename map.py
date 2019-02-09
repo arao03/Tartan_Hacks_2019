@@ -5,12 +5,12 @@ SCREEN_WIDTH, SCREEN_HEIGHT = SCREEN_SIZE
 SCREEN_LENGTH = SCREEN_WIDTH//11 +1
 GAME_TITLE = "TH2019"
 MUSIC_PATH = "./Assets/Music/menu.ogg"
-WELCOME_AUDIO = "./Assets/Speech/audio_welcome.wav"
 
 # SPRITE VARS
 SPRITE_OFFSETS = (90, 240)
 SPRITE_LOCATION_LEFT = (40,60)
 SPRITE_LOCATION_RIGHT = (410,60)
+SPRITE_LOCATION_RIGHT2 = (320,60)
 SPRITE_LOCATION_CENTER = (185,60)
 
 # ANNABELLE VARS
@@ -45,6 +45,8 @@ OPENING_SCRIPT = './Assets/Scripts/openscene.txt'
 HUMAN_INTRO = './Assets/Scripts/humanintro.txt'
 HUMAN_ED_INTRO = './Assets/Scripts/humanedintro.txt'
 HUMAN_SIT1_ELF = './Assets/Scripts/humansit1e.txt'
+HUMAN_SIT1_ELF_TRANS1 = './Assets/Scripts/humansit1etrans.txt'
+HUMAN_SIT1_ELF_TRANS2 = './Assets/Scripts/humansit1etrans2.txt'
 HUMAN_SIT2_ELF = './Assets/Scripts/humansit2e.txt'
 HUMAN_SIT2_HUMAN = './Assets/Scripts/humansit2h.txt'
 HUMAN_SIT1_HUMAN = './Assets/Scripts/humansit1h.txt'
@@ -57,6 +59,7 @@ HUMAN_TEAM1_HUMAN = './Assets/Scripts/humanteam1h.txt'
 # ELF SCRIPTS
 ELF_INTRO = './Assets/Scripts/elfintro.txt'
 ELF_TRAD_INTRO = './Assets/Scripts/elftradintro.txt'
+ELF_SIT1_HUMAN = './Assets/Scripts/elfsit1h.txt'
 ELF_SIT1_HUMAN = './Assets/Scripts/elfsit1h.txt'
 ELF_SIT2_HUMAN = './Assets/Scripts/elfsit2h.txt'
 ELF_SIT2_ELF = './Assets/Scripts/elfsit2e.txt'
