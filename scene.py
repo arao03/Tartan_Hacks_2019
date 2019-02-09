@@ -171,51 +171,6 @@ class Icon(pygame.sprite.Sprite):
     def __init__(self, file_name, position):
         self.image = getImg(file_name, data.imageLibrary)
         self.rect = posSwitch(position)
-        
-background_dict = {"city": Background(map.BACKGROUND_CITY),
-                   "house": Background(map.BACKGROUND_HOUSE),
-                   "forge": Background(map.BACKGROUND_FORGE),
-                   "school": Background(map.BACKGROUND_SCHOOL)}
-
-character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 0, 0),
-                  "kaylin-l": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 0, 0),
-                  "forvik-l": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 0, 0),
-                  "annabelle-r": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 1, 0, True),
-                  "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
-                  "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
-                  "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
-                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
-                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
-                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
-                  "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
-                  "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
-                  "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
-                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1)}
-
-script_dict = {"open": parse_(map.OPENING_SCRIPT),
-               "hintro": parse_(map.HUMAN_INTRO),
-               "heduintro": parse_(map.HUMAN_ED_INTRO),
-               "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
-               "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
-               "hsit2human": parse_(map.HUMAN_SIT2_HUMAN),
-               "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
-               "htradeintro": parse_(map.HUMAN_TR_INTRO),
-               "hteam1dwarf": parse_(map.HUMAN_TEAM1_DWARF),
-               "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
-               "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
-               "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN),
-               "eintro": parse_(map.ELF_INTRO),
-               "etrintro": parse_(map.ELF_TRAD_INTRO),
-               "esit1human": parse_(map.ELF_SIT1_HUMAN),
-               "esit2human": parse_(map.ELF_SIT2_HUMAN),
-               "esit2elf": parse_(map.ELF_SIT2_ELF),
-               "esit1elf": parse_(map.ELF_SIT1_ELF),
-               "etutintro": parse_(map.ELF_TUT_INTRO),
-               "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
-               "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
-               "esmile2elf": parse_(map.ELF_SMILE2_ELF),
-               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
-               }
 
 textbox = TextBox()
 
@@ -242,17 +197,13 @@ class Scene(object):
         else:
             self.background = background_dict["city"]
         # Set the character for the scene.
-        if character is not None:
-            for (char, exp, pos) in character:
+        if isinstance(character, list):
+            for char in character:
                 chartmp = character_dict[char]
-                chartmp.dict["expression"] = exp
-                chartmp.dict["position"] = pos
                 self.sprites.add(chartmp)
         else:
-            for (char, exp, pos) in [("human-1r", 1, 0), ("elf-0l", 1, 2)]: # Default chars
+            for char in ["human-1r", "elf-0l"]: # Default chars
                 chartmp = character_dict[char]
-                chartmp.dict["expression"] = exp
-                chartmp.dict["position"] = pos
                 self.sprites.add(chartmp)
                 
     def startScene(self):
@@ -301,10 +252,65 @@ class Scene(object):
     def stopPlayback(self, channel):
         stopSound(channel)
         
+################################################### SCENE CREATION ######################################################
+        
+background_dict = {"city": Background(map.BACKGROUND_CITY),
+                   "house": Background(map.BACKGROUND_HOUSE),
+                   "forge": Background(map.BACKGROUND_FORGE),
+                   "school": Background(map.BACKGROUND_SCHOOL)}
+
+character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 0, 0),
+                  "kaylin-l": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 0, 0),
+                  "forvik-l": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 0, 0),
+                  "annabelle-r": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 1, 0, True),
+                  "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
+                  "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
+                  "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
+                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
+                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
+                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
+                  "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
+                  "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
+                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1)}
+        
+script_dict = {"open": parse_(map.OPENING_SCRIPT),
+               "hintro": parse_(map.HUMAN_INTRO),
+               "heduintro": parse_(map.HUMAN_ED_INTRO),
+               "hsit1elf": parse_(map.HUMAN_SIT1_ELF),
+               "hsit2elf": parse_(map.HUMAN_SIT2_ELF),
+               "hsit2human": parse_(map.HUMAN_SIT2_HUMAN),
+               "hsit1human": parse_(map.HUMAN_SIT1_HUMAN),
+               "htradeintro": parse_(map.HUMAN_TR_INTRO),
+               "hteam1dwarf": parse_(map.HUMAN_TEAM1_DWARF),
+               "hteam2dwarf": parse_(map.HUMAN_TEAM2_DWARF),
+               "hteam2human": parse_(map.HUMAN_TEAM2_HUMAN),
+               "hteam1human": parse_(map.HUMAN_TEAM1_HUMAN),
+               "eintro": parse_(map.ELF_INTRO),
+               "etrintro": parse_(map.ELF_TRAD_INTRO),
+               "esit1human": parse_(map.ELF_SIT1_HUMAN),
+               "esit2human": parse_(map.ELF_SIT2_HUMAN),
+               "esit2elf": parse_(map.ELF_SIT2_ELF),
+               "esit1elf": parse_(map.ELF_SIT1_ELF),
+               "etutintro": parse_(map.ELF_TUT_INTRO),
+               "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
+               "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
+               "esmile2elf": parse_(map.ELF_SMILE2_ELF),
+               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
+               }
+        
 scene_dict = {"open": Scene(),
+<<<<<<< HEAD
               "hintro": Scene("city", [("human-1r", 1, 0)], "hintro", None, ["heduintro", ""),
               1: Scene("city", [("elf-1l", 1, 2)], "eintro", None, [3]), # placeholder
               2: Scene("city", [("elf-1l", 0, 1)], "hintro", None, [3]), # placeholder
               3: Scene("school", [("kaylin-l", 0, 0), ("human-0l", 1, 1)], "heduintro", None, [0, 1]),
               "e_intro": Scene("city", )
               }
+=======
+              "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
+              "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
+              "dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
+              "heduintro": Scene("school", ["kaylin-l", "human-0l"], "heduintro", None, ["hsit1elf", "hsit1human"]),
+              "hsit1elf": Scene("school", [""])}
+>>>>>>> 21b7f9db4a8ac8bd25febdab466b70af2908804b
