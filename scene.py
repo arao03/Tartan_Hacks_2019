@@ -354,5 +354,14 @@ scene_dict = {"open": Scene(),
               "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", None, []),
               "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", None, []),
               "esmile1elf": Scene("house", [], "esmile1elf", None, []),
-              "dintro": Scene("city", ["forvik-l"], "dintro", None, [""])
+              "dintro": Scene("city", ["forvik-l"], "dintro", None, ["dschoolintro", "dschoolbro"]),
+              "dschoolintro": Scene("school", ["annabelle-l", "dwarf-0r"], "dschoolintro", None, ["dsit1human", "dsit1dwarf"]),
+              "dsit1human": Scene("school", ["annabelle-l", "dwarf-0r"], "dsit1human", None, ["dsit2human, dsit2dwarf"]),
+              "dsit2human": Scene("forge", ["annabelle-l"], "dsit2human", None, []),
+              "dsit2dwarf": Scene("forge", [], "dsit2dwarf", None, []),
+              "dsit1dwarf": Scene("forge", [], "dsit1dwarf", None, []),
+              "dschoolbro": Scene("forge", [], "dschoolbro", None, ["dschoolintro", "dadvintro"]),
+              "dadvintro": Scene("forge", ["kaylin-l"], "dadvintro", None, ["dbladeyes", "dbladeno"]),
+              "dbladeyes": Scene("forge", ["kaylin-l"], "dbladeyes", None, []),
+              "dbladeno": Scene("forge", [], "dbladeno", None, [])
               }
