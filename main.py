@@ -24,8 +24,7 @@ def main():
     # Initialize an all-purpose data instance for the model
     data = Data()
     initData(data)
-    size = map.SCREEN_SIZE
-    screen = pygame.display.set_mode(size)
+    screen = pygame.display.set_mode(map.SCREEN_SIZE)
     pygame.display.set_caption(map.GAME_TITLE)
     time = pygame.time.Clock()
     scene = scene_dict["open"]
