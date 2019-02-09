@@ -6,7 +6,7 @@ clock = pygame.time.Clock()
 font = pygame.font.Font(None, 25)
 
 # raise the USEREVENT every 1000ms
-pygame.time.set_timer(pygame.USEREVENT, 75)
+pygame.time.set_timer(pygame.USEREVENT, 100)
 
 # generate a generator that scrolls through the letters
 # given a string foo, it will return
@@ -48,6 +48,8 @@ class DynamicText(object):
     def draw(self, screen):
         screen.blit(self.rendered, self.pos)
 
+messagefile = open("./Assests/textfiles/scene1.txt")
+
 message1 = DynamicText(font, "A long time ago...", (200, 200), autoreset=False)
 message2 = DynamicText(font, "there existed a...", (200, 200), autoreset=False)
 messagenumber = 1
@@ -63,7 +65,7 @@ while True:
         screen.fill(pygame.color.Color('black'))
         if message1.done == True:
             if pauseflag == 0:
-                time.sleep(0.7)
+                pygame.time.delay(500)
                 pauseflag = 1
             messagenumber = 2
         if messagenumber == 1:

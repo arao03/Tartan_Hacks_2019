@@ -9,6 +9,7 @@ import pygame
 
 def initData(data):
     data.gameOver = False
+    data.imageLibrary = {}
 
 
 def main():

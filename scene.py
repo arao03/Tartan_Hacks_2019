@@ -2,6 +2,20 @@ import os, sys, pygame
 from pygame.locals import *
 import map
 
+
+def getImg(path, library):
+    # https://nerdparadise.com/programming/pygame/part2
+
+    # When called, checks global variable imgLib for the image. If it has not
+    # already been loaded, then loads image.
+    image = library.get(path)
+    if image == None:
+        filePath = path.replace("/", os.sep).replace("\\", os.sep)
+        image = pygame.image.load(filePath)
+        library[path] = image
+    return image
+
+
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
