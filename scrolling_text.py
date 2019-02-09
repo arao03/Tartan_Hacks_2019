@@ -48,7 +48,12 @@ class DynamicText(object):
     def draw(self, screen):
         screen.blit(self.rendered, self.pos)
 
-messagefile = open("./Assests/textfiles/scene1.txt")
+lines = []
+def parse_script(filename):
+    script = open(filename,"r")
+    for l in script.readline():
+        lines.append(DynamicText(font,l,(300,100), autoreset=False))
+
 
 message1 = DynamicText(font, "A long time ago...", (200, 200), autoreset=False)
 message2 = DynamicText(font, "there existed a...", (200, 200), autoreset=False)
@@ -58,20 +63,15 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: break
         if messagenumber == 1:
-            if event.type == pygame.USEREVENT: message1.update()
-        else:
-            if event.type == pygame.USEREVENT: message2.update()
+            if event.type == pygame.USEREVENT: lines[messagenumber].update()
     else:
         screen.fill(pygame.color.Color('black'))
-        if message1.done == True:
+        if lines[messagenumber].done == True:
             if pauseflag == 0:
                 pygame.time.delay(500)
                 pauseflag = 1
-            messagenumber = 2
-        if messagenumber == 1:
-            message1.draw(screen)
-        else:
-            message2.draw(screen)
+            messagenumber += 1
+        lines[messagenumber].draw(screen)
         pygame.display.update()
         clock.tick(120)
         continue
