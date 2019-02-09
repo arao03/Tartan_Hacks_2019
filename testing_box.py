@@ -10,7 +10,6 @@ pygame.mouse.set_visible(map.MOUSE_VIS)
 clock = pygame.time.Clock()
 dead = False
 
-scene0 = Scene()
 
 while (dead == False):
     for event in pygame.event.get():
