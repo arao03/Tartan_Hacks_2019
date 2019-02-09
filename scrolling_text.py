@@ -71,6 +71,7 @@ def parse_(filename):
         lines.append(DynamicText(font,l.rstrip(),(22,250), autoreset=False))
     script.close()
     script = open(filename, "w", encoding="utf-8")
+    script.truncate()
     script.write(contents)
     return lines
 

@@ -5,6 +5,20 @@ import map
 from scrolling_text import *
 from operator import pos
 
+def initData(data):
+    data.gameOver = False
+    data.imageLibrary = {}
+    data.soundLibrary = {}
+    data.buttons = set()
+    data.gametime = 0
+    data.channel_speech = pygame.mixer.Channel(1)
+    data.channel_speech.set_volume(1)
+    
+class Data(object): pass
+    # Initialize an all-purpose data instance for the model
+data = Data()
+initData(data)
+
 def posSwitch(argument):
     switcher = {
             0: pygame.Rect(map.SPRITE_LOCATION_LEFT, map.SPRITE_OFFSETS),
@@ -21,7 +35,7 @@ def getImg(path, library):
     image = library.get(path)
     if image == None:
         filePath = path.replace("/", os.sep).replace("\\", os.sep)
-        image = pygame.image.load(filePath)
+        image = pygame.image.load(filePath).convert()
         library[path] = image
     return image
 
@@ -42,7 +56,7 @@ def stopSound(channel):
 class SpriteSheet(object):
     def __init__(self, filename):
         try:
-            self.sheet = pygame.image.load(filename).convert()
+            self.sheet = getImg(filename, data.imageLibrary)
         except (pygame.error, message):
             print ('Unable to load spritesheet image:', filename)
             raise (SystemExit, message)
@@ -117,48 +131,151 @@ class SpriteStripAnim(object):
 class Background(pygame.surface.Surface):
     def __init__(self, image_file):
         pygame.surface.Surface.__init__(self, map.SCREEN_SIZE)
-        self.image = pygame.image.load(image_file).convert()
+        self.image = getImg(image_file, data.imageLibrary)
         self.rect = self.image.get_rect()
         
 class TextBox(pygame.surface.Surface):
     def __init__(self):
-        self.image = pygame.image.load(map.TEXTBOX_PATH).convert()
+        self.image = getImg(map.TEXTBOX_PATH, data.imageLibrary)
         self.rect = pygame.Rect(map.TEXTBOX_RECT)
         self.image.set_colorkey(self.image.get_at((0,0)))
 
 class Character(pygame.sprite.Sprite):
-    def __init__(self, file_name, expression_count, position = 0, expression = 0):
+    def __init__(self, file_name, expression_count, position = 0, expression = 0, flipped = False):
         pygame.sprite.Sprite.__init__(self)
-        self.val_dict = {"file_name": file_name,
-                         "expression_count": expression_count,
-                         "position": position,
+        self.val_dict = {"position": position,
                          "expression": expression}
         
         self.images = SpriteSheet(file_name).load_strip(pygame.Rect((0,0), map.SPRITE_OFFSETS),  expression_count, colorkey = (255,255,255))
             
         self.rect = posSwitch(self.val_dict["position"])
-        self.image = self.images[self.val_dict["position"]]
+        if flipped:
+            self.image = pygame.transform.flip(self.images[self.val_dict["expression"]], True, False)
+        else:
+            self.image = self.images[self.val_dict["expression"]]
         
-    def updateCharacter(self, key, arguement):
-        self.val_dict[key] = arguement
+    def get_dict(self):
+        return self.val_dict
+    
+    def set_dict(self, key, argument):
+        self.val_dict[key] = argument
         self.update()
         
     def update(self):
-        self.image = self.images[self.val_dict["expression"]]
         self.rect = posSwitch(self.val_dict["position"])
+        self.image = self.images[self.val_dict["expression"]]
         
+    dict = property(get_dict, set_dict)
+
+
+class Icon(pygame.sprite.Sprite):
+    def __init__(self, file_name, position):
+        self.image = getImg(file_name, data.imageLibrary)
+        self.rect = posSwitch(position)
+>>>>>>> fc600140030905bd3cf104d8792d1afebd5c2ff5
+
+
+textbox = TextBox()
+
+class Scene(object):
+    def __init__(self, background = None, character = None, text = None, audio = None, transitions = None):
+        self.id = id
+        self.sprites = pygame.sprite.Group()
+        self.messagenumber = 0
+        self.audio = audio
+        
+        # Set transitions.
+        if transitions is not None:
+            self.transitions = transitions
+        else:
+            self.transitions = [0,1,2]
+        # Set the text for the scene.
+        if text is not None:
+            self.text = script_dict[text]
+        else:
+            self.text = script_dict["open"]
+        # Set the background for the scene.
+        if background is not None:
+            self.background = background_dict[background]
+        else:
+            self.background = background_dict["city"]
+        # Set the character for the scene.
+        if isinstance(character, list):
+            for char in character:
+                chartmp = character_dict[char]
+                self.sprites.add(chartmp)
+        else:
+            for char in ["human-1r", "elf-0l"]: # Default chars
+                chartmp = character_dict[char]
+                self.sprites.add(chartmp)
+                
+    def startScene(self):
+        if self.audio is not None:
+            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
+        else:
+            self.playSpeech(map.WELCOME_AUDIO, data.channel_speech, data.soundLibrary)
+    
+    def goLeft(self):
+        if len(self.transitions) > 0:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[0]], True)
+        else:
+            print "No left path"
+            return (self, False)
+    
+    def goRight(self):
+        if len(self.transitions) > 1:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[1]], True)
+        else:
+            print "No right path"
+            return (self, False)
+    
+    def goCenter(self):
+        if len(self.transitions) > 2:
+            self.stopPlayback(data.channel_speech)
+            return (scene_dict[self.transitions[2]], True)
+        else:
+            print "Please choose left or right"
+            return (self, False)
+        
+    def draw(self, screen, event, gametime):
+        screen.fill([255, 255, 255])
+        screen.blit(self.background.image, (0,0))
+        self.sprites.draw(screen)
+        screen.blit(textbox.image, textbox.rect)
+        self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
+
+        pygame.display.update()
+
+    def playSpeech(self, path, channel, library):
+        playSound(path, channel, library)
+
+    def stopPlayback(self, channel):
+        stopSound(channel)
+        
+################################################### SCENE CREATION ######################################################
         
 background_dict = {"city": Background(map.BACKGROUND_CITY),
                    "house": Background(map.BACKGROUND_HOUSE),
                    "forge": Background(map.BACKGROUND_FORGE),
                    "school": Background(map.BACKGROUND_SCHOOL)}
 
-character_dict = {"annabelle": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS),
-                  "kaylin": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS),
-                  "forvik": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS),
-                  "elf": Character(map.ELF_PATH, 2),
-                  "human": Character(map.HUMAN_PATH, 2)}
-
+character_dict = {"annabelle-l": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 0, 0),
+                  "kaylin-l": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 0, 0),
+                  "forvik-l": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 0, 0),
+                  "annabelle-r": Character(map.ANNABELLE_PATH, map.ANNABELLE_EXPRESSIONS, 1, 0, True),
+                  "kaylin-r": Character(map.KAYLIN_PATH, map.KAYLIN_EXPRESSIONS, 1, 0, True),
+                  "forvik-r": Character(map.FORVIK_PATH, map.FORVIK_EXPRESSIONS, 1, 0, True),
+                  "elf-0r": Character(map.ELF_PATH, 2, 0, 0),
+                  "elf-1r": Character(map.ELF_PATH, 2, 0, 1, True),
+                  "elf-0l": Character(map.ELF_PATH, 2, 1, 0, True),
+                  "elf-1l": Character(map.ELF_PATH, 2, 1, 1),
+                  "human-0r": Character(map.HUMAN_PATH, 2, 0, 0),
+                  "human-1r": Character(map.HUMAN_PATH, 2, 0, 1, True),
+                  "human-0l": Character(map.HUMAN_PATH, 2, 1, 0, True),
+                  "human-1l": Character(map.HUMAN_PATH, 2, 1, 1)}
+        
 script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "hintro": parse_(map.HUMAN_INTRO),
                "heduintro": parse_(map.HUMAN_ED_INTRO),
@@ -181,65 +298,24 @@ script_dict = {"open": parse_(map.OPENING_SCRIPT),
                "esmile1dwarf": parse_(map.ELF_SMILE1_DWARF),
                "esmile2dwarf": parse_(map.ELF_SMILE2_DWARF),
                "esmile2elf": parse_(map.ELF_SMILE2_ELF),
-               "esmile1elf": parse_(map.ELF_SMILE1_ELF),
-               "dintro": parse_(map.DWARF_INTRO),
-               "dschoolyou": parse_(map.DWARF_SCHOOL_YOU)
+               "esmile1elf": parse_(map.ELF_SMILE1_ELF)
                }
-
-
-textbox = TextBox()
-
-class Scene(object):
-    def __init__(self, background = None, character = None, text = None, buttons= None):        
-        self.id = id
-        self.sprites = pygame.sprite.Group()
-        self.messagenumber = 0
-        # Set the text for the scene.
-        if text is not None:
-            self.text = script_dict[text]
-        else:
-            self.text = script_dict["open"]
-        # Set the background for the scene.
-        if background is not None:
-            self.background = background_dict[background]
-        else:
-            self.background = background_dict["city"]
-        # Set the character for the scene.
-        if isinstance(character, list):
-            for (char, exp, pos) in character:
-                chartmp = character_dict[char]
-                chartmp.updateCharacter("expression", exp)
-                chartmp.updateCharacter("position", pos)
-                self.sprites.add(chartmp)
-        else:
-            print ("Please provide characters as a list [left, right, center]")
-            raise SystemError
         
-        # Set the buttons.
-        if isinstance(buttons, list):
-            self.buttons = buttons
-        elif isinstance(character, list):
-            print ("Please provide buttons for your character.")
-            raise SystemError
+scene_dict = {"open": Scene(),
+              "hintro": Scene("city", ["human-1r"], "hintro", None, ["heduintro", "htradeintro"]),
+              "dintro": Scene("city", ["elf-1l"], "hintro", None, []), # placeholder
+              "heduintro": Scene("school", ["kaylin-l", "human-0l"], "heduintro", None, ["hsit1elf", "hsit1human"]),
+              "hsit1elf": Scene("school", [""]),
 
-    def draw(self, screen, event, gametime):
-        screen.fill([255, 255, 255])
-        screen.blit(self.background.image, (0,0))
-        self.sprites.draw(screen)
-        screen.blit(textbox.image, textbox.rect)
-        self.messagenumber = parse_script(self.text, event, self.messagenumber, gametime)
-
-        pygame.display.update()
-
-    def playSpeech(self, path, channel, library):
-        playSound(path, channel, library)
-
-    def stopPlayback(self, channel):
-        stopSound(channel)
-
-
-scene_dict = {"open": Scene(background="city", character=[("human", 0, 0), ("elf", 0, 1), ("elf", 1, 2)], text="open", buttons=[button_dict[0], button_dict[1], button_dict[2]]),
-              "0": Scene("city", [("human", 1, 0)], "hintro", [button_dict[3]]),
-              "1": Scene("city", [("elf", 1, 2)], "eintro", [button_dict[3]]), # placeholder
-              "2": Scene("city", [("elf", 0, 1)], "hintro", [button_dict[3]]), # placeholder
-              "3": Scene("school", [("kaylin", 0, 0), ("human", 1, 1)], "heduintro", [button_dict[0]])}
+              "eintro": Scene("city", ["elf-1l"], "eintro", None, ["etrintro", "etutintro"]),
+              "etrintro": Scene("school", ["annabelle-l", "elf-1r"], "etrintro", None, ["esit1human", "esit1elf"]),
+              "esit1human": Scene("school", ["annabelle-l", "elf-0r"], "esit1human", None, ["esit2human", "esit2elf"]),
+              "esit2human": Scene("house", ["annabelle-1"], "esit2human", None, []),
+              "esit2elf": Scene("house", [], "esit2elf", None, []),
+              "esit1elf": Scene("house", [], "esit1elf", None, []),
+              "etutintro": Scene("house", ["forvik-1"], "etutintro", None, ["esmile1dwarf", "esmile1elf"]),
+              "esmile1dwarf": Scene("forge", ["forvik-l", "elf-0r"], "esmile1dwarf", None, ["esmile2dwarf", "esmile2elf"]),
+              "esmile2dwarf": Scene("house", ["elf-0l", "forvik-r"], "esmile2dwarf", None, []),
+              "esmile2elf": Scene("house", ["elf-0l"], "esmile2elf", None, []),
+              "esmile1elf": Scene("house", [], "esmile1elf", None, [])
+              }
