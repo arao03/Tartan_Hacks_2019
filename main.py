@@ -5,6 +5,7 @@ imcmahon, lkipp, ananyara, asteiner
 
 
 import pygame
+from scene import *
 
 
 def initData(data):
@@ -20,12 +21,19 @@ def main():
     # Initialize an all-purpose data instance for the model
     data = Data()
     initData(data)
-    size = [800, 800]
+    size = map.SCREEN_SIZE
     screen = pygame.display.set_mode(size)
+<<<<<<< HEAD
     pygame.display.set_caption("TartanHacks 2019")
     time = pygame.time.Clock()
 
     pygame.mixer.music.load("music/menu.ogg")  # This is where to look for music playing
+=======
+    scene = Scene()
+    pygame.display.set_caption(map.GAME_TITLE)
+    time = pygame.time.Clock()
+    pygame.mixer.music.load("./Music/menu.ogg")  # This is where to look for music playing
+>>>>>>> babe09406d8084fa235b9c01634d43e5b1f1494a
     pygame.mixer.music.play(-1)
     pygame.mixer.music.set_volume(.3)
 
@@ -35,6 +43,8 @@ def main():
                 data.gameOver = True
 
         screen.fill((255, 255, 255))
+        scene.draw(screen)
+        
         time.tick(60)
         pygame.display.flip()
     pygame.quit()
