@@ -64,14 +64,13 @@ def parse_(filename):
         l = contents[start:j]
         lines.append(DynamicText(font,l,(30,250), autoreset=False))
         start = j
-        print(start)
     return lines
 
 
 #messagenumber = 0
 def parse_script(lines,event,messagenumber,gametime):
     if event.type == pygame.USEREVENT: lines[messagenumber].update()
-    if messagenumber >= len(lines) - 1:
+    if messagenumber >= len(lines)-1:
         lines[messagenumber].draw(screen)
         return None
     if lines[messagenumber].done and not (gametime % 130):
