@@ -45,11 +45,8 @@ def getSound(path, library):
     sound = library.get(path)
     if sound == None:
         filePath = path.replace("/", os.sep).replace("\\", os.sep)
-        
-        try: 
-            sound = pygame.mixer.Sound(filePath)
-        except (pygame.error, message):
-            pass
+        sound = pygame.mixer.Sound(filePath)
+
         library[path] = sound
     return sound
 
@@ -181,16 +178,23 @@ class Icon(pygame.sprite.Sprite):
 
 textbox = TextBox()
 
+class StartSprite(pygame.sprite.Sprite):
+    def __init__(self):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = getImg(map.GAME_START_PATH, data.imageLibrary)
+        self.rect = pygame.Rect((0,0), map.SCREEN_SIZE)
+        self.image.set_colorkey((255,255,255), pygame.RLEACCEL)
+
 class Title(object):
     def __init__(self):
         self.background = background_dict["city"]
     
     def draw(self):
-        screen.fill([255, 255, 255])
         screen.blit(self.background.image, (0,0))
-        self.sprites.draw(screen)
+        sprites = pygame.sprite.Group()
+        sprites.add(StartSprite())
+        sprites.draw(screen)
 
-        pygame.display.update()
 
 class Scene(object):
     def __init__(self, background = None, character = None, text = None, audio = -1, transitions = None):

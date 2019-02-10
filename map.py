@@ -4,7 +4,7 @@ SCREEN_SIZE = (540, 300)
 SCREEN_WIDTH, SCREEN_HEIGHT = SCREEN_SIZE
 SCREEN_LENGTH = 50
 GAME_TITLE = "Fryne - An Adventure for All"
-
+GAME_START_PATH = "./Assets/title_screen.png"
 MUSIC_PATH = "./Assets/Music/menu.ogg"
 
 # SPRITE VARS
